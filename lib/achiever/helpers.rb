@@ -33,22 +33,18 @@ module Achiever
       end
     end
 
+    def has_new_badges?
+      false
+    end
+
     attr_accessor :recent_achievements
 
     def achieve(name, progress: 1)
-      Achiever.validate(name)
-
-      new_badges =
-        unless has_achievement?(name)
-          Achievement.new(name: name, user_id: id)
-        else
-          achievement(name)
-        end.achieve(progress)
-
-      unless new_badges.empty?
-        @recent_achievements =
-          (@recent_achievements || []) + new_badges.map(&:attr)
-      end
+      unless has_achievement?(name)
+        Achievement.new(name: name, user_id: id)
+      else
+        achievement(name)
+      end.achieve(progress)
     end
   end
 end
