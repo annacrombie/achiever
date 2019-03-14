@@ -1,0 +1,19 @@
+<div class="content col-sm-12 col-md-9 grey-bg" role="main">
+  <h1>My Badges</h1>
+  <% @achievements.each do |name, badges| %>
+    <div class="badge_shelf">
+      <span class="achievement_title">
+        <%= t("achievements.#{name}.title") %>
+        <%= "#{badges.first.have} / #{badges.max_by(&:required).required}" %>
+      </span>
+      <div class="badge_boxes">
+        <% badges.each do |badge| %>
+          <div class="badge_box">
+            <%= badge.icon %>
+            <span class="badge_title"><%= badge.name %></span>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+</div>

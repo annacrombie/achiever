@@ -1,0 +1,32 @@
+.badge_shelf .badge_boxes {
+  padding: 20px;
+  display: block;
+}
+
+.badge_shelf .achievement_title {
+  font-size: 20px;
+  display: block;
+}
+
+.badge_box {
+  top: 0;
+  display: inline-block;
+  text-align: center;
+  width: 100px;
+  vertical-align: top;
+}
+
+.badge_box .badge_title {
+  border-top: 1px solid black;
+  display: block;
+}
+
+.badge_icon .unachieved {
+  display: inline-block;
+  -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+  filter: grayscale(100%);
+}
+
+.badge_icon .achieved {
+  display: inline-block;
+}

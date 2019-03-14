@@ -1,0 +1,19 @@
+<div
+  class="modal fade bd-example-modal-md achievements-modal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myLargeModalLabel"
+  aria-hidden="false">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content contact-modal-content py-4">
+      <% session[:achievements].map { |attr| Achiever::Badge.from_attr(attr) }
+                               .each do |badge| %>
+        <%= badge.icon %>
+        <h1><%= t('achievements.congratulations', name: badge.name) %></h1>
+        <h4><%= badge.desc %>.</h4>
+      <% end %>
+      <%= link_to t('achievements.view_all'), achievements_path %>
+    </div>
+  </div>
+</div>
+<% session[:achievements].clear %>
