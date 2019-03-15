@@ -34,7 +34,15 @@ module Achiever
     end
 
     def has_new_badges?
-      false
+      achievements.any? { |ach| ! ach.new_badges.empty? }
+    end
+
+    def new_badges
+      achievements.map { |ach| ach.new_badges }.flatten
+    end
+
+    def clear_new_badges
+      achievements.each { |ach| ach.clear_new_badges }
     end
 
     attr_accessor :recent_achievements

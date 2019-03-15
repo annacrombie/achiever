@@ -41,6 +41,11 @@ class Achievement < ApplicationRecord
     end.compact
   end
 
+  def clear_new_badges
+    self[:notified_progress] = progress
+    save
+  end
+
   def achieve(new_progress)
     self[:progress] += new_progress
     save

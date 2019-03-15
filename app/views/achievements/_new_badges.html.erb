@@ -6,8 +6,7 @@
   aria-hidden="false">
   <div class="modal-dialog modal-md">
     <div class="modal-content contact-modal-content py-4">
-      <% session[:achievements].map { |attr| Achiever::Badge.from_attr(attr) }
-                               .each do |badge| %>
+      <% current_user.new_badges.each do |badge| %>
         <%= badge.icon %>
         <h1><%= t('achievements.congratulations', name: badge.name) %></h1>
         <h4><%= badge.desc %>.</h4>
@@ -16,4 +15,4 @@
     </div>
   </div>
 </div>
-<% session[:achievements].clear %>
+<% current_user.clear_new_badges %>
