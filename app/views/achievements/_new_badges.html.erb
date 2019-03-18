@@ -6,7 +6,7 @@
   aria-hidden="false">
   <div class="modal-dialog modal-md">
     <div class="modal-content contact-modal-content py-4">
-      <% current_user.new_badges.each do |badge| %>
+      <% achiever.new_badges.each do |badge| %>
         <%= badge.icon %>
         <h1><%= t('achievements.congratulations', name: badge.name) %></h1>
         <h4><%= badge.desc %>.</h4>
@@ -15,4 +15,4 @@
     </div>
   </div>
 </div>
-<% current_user.clear_new_badges %>
+<% achiever.clear_new_badges %>
