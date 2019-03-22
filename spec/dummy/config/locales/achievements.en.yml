@@ -28,7 +28,7 @@ en:
     profile:
       title: Profile
       badges:
-        100:
+        2:
           name: Kind of a Big Deal
       desc:
         other: Complete your profile
@@ -77,18 +77,27 @@ en:
         one: "Complete %{count} course group"
         other: "Complete %{count} course groups"
 
-    leaderboard:
+    leaderboard_first:
       title: NXTQ Leaderboard
       badges:
-        3:
-          name: Bronze Medal
-        2:
-          name: Silver Medal
         1:
           name: Gold Medal
       desc:
         one: Be the very best
-        other: "Achieve Position %{count} on the NXTQ leaderboard"
+    leaderboard_second:
+      title: NXTQ Leaderboard
+      badges:
+        1:
+          name: Silver Medal
+      desc:
+        one: Get second place on the leaderboard
+    leaderboard_third:
+      title: NXTQ Leaderboard
+      badges:
+        1:
+          name: Bronze Medal
+      desc:
+        one: Get third place on the leaderboard
 
     coins:
       title: Coins
@@ -112,7 +121,7 @@ en:
       desc:
         other: "Receive %{count} extra lives"
 
-    quizzes:
+    nxtq_quizzes_correct:
       title: Correct NXTQ Quizzes
       badges:
         5:
@@ -127,7 +136,7 @@ en:
         one: "%{count} NXTQ quiz correct"
         other: "%{count} NXTQ quizzes correct"
 
-    quiz_attempts:
+    nxtq_quiz_attempts:
       title: Attempted NXTQ Quizzes
       badges:
         10:

@@ -19,7 +19,7 @@ profile_picture:
 
 profile:
   badges:
-    - required: 100
+    - required: 2
       img: dummy_2
   visibility: visible
 
@@ -59,14 +59,22 @@ course_groups:
       img: dummy_15
   visibility: visible
 
-leaderboard:
+leaderboard_first:
   badges:
-    - required: 3
+    - required: 1
       img: dummy_18
-    - required: 2
-      img: dummy_17
+  visibility: visible
+
+leaderboard_second:
+  badges:
     - required: 1
       img: dummy_16
+  visibility: visible
+
+leaderboard_third:
+  badges:
+    - required: 1
+      img: dummy_17
   visibility: visible
 
 coins:
@@ -87,7 +95,7 @@ lives:
       img: dummy_24
   visibility: visible
 
-quizzes:
+nxtq_quizzes_correct:
   badges:
     - required: 5
       img: dummy_25
@@ -99,7 +107,7 @@ quizzes:
       img: dummy_28
   visibility: visible
 
-quiz_attempts:
+nxtq_quiz_attempts:
   badges:
     - required: 10
       img: dummy_29
