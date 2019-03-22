@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 class ApplicationController < ActionController::Base
   def current_user
-    unless User.first.nil?
-      User.first
-    else
+    if User.first.nil?
       User.create
+    else
+      User.first
     end
   end
 end

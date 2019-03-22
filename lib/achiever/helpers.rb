@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Achiever
   module Helpers
     def has_achievement?(name)
@@ -24,7 +26,7 @@ module Achiever
             Achiever.badges(name)
           end
         ]
-      end.reject { |n, b| b.nil? }.to_h
+      end.reject { |_n, b| b.nil? }.to_h
     end
 
     def badge_count
@@ -34,24 +36,24 @@ module Achiever
     end
 
     def has_new_badges?
-      achievements.any? { |ach| ! ach.new_badges.empty? }
+      achievements.any? { |ach| !ach.new_badges.empty? }
     end
 
     def new_badges
-      achievements.map { |ach| ach.new_badges }.flatten
+      achievements.map(&:new_badges).flatten
     end
 
     def clear_new_badges
-      achievements.each { |ach| ach.clear_new_badges }
+      achievements.each(&:clear_new_badges)
     end
 
     attr_accessor :recent_achievements
 
     def achieve(name, progress: 1)
-      unless has_achievement?(name)
-        Achievement.new(name: name, user_id: id)
-      else
+      if has_achievement?(name)
         achievement(name)
+      else
+        Achievement.new(name: name, user_id: id)
       end.achieve(progress)
     end
   end

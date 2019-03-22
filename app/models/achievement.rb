@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Achievement < ApplicationRecord
   validate :valid_achievement_name
   def valid_achievement_name
@@ -35,7 +37,7 @@ class Achievement < ApplicationRecord
   def new_badges
     Achiever.achievement(name)['badges'].map do |badge|
       if badge['required'] > notified_progress &&
-          badge['required'] <= progress
+         badge['required'] <= progress
         Achiever::Badge.new(name, badge['required'], progress)
       end
     end.compact

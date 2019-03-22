@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Achiever
   class InvalidAchievementName < StandardError
     def initialize(name)

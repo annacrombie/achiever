@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Achiever
   module Config
     DEFAULT = {
@@ -5,7 +7,7 @@ module Achiever
       mtime: Time.at(0),
       achievements_file: 'config/achievements.yml'
     }.freeze
-    PRIVATE = %i[achievements mtime]
+    PRIVATE = %i[achievements mtime].freeze
 
     class << self
       def append_features(rcvr, names: %i[config configure], prefix: :'')
@@ -26,28 +28,28 @@ module Achiever
       def methods_for(config, rcvr, prefix)
         config.reject { |k, _| PRIVATE.include?(k) }.map do |k, v|
           (case v
-          when true, false
-            [[:"dont_#{k}", -> { @config[k] = false }],
-             [:"do_#{k}",   -> { @config[k] = true } ],
-             [:"#{k}!",     -> { @config[k] = true } ],
-             [:"#{k}?",     -> { @config[k] }        ],
-             [:"#{k}=",     ->(l) {
-               raise(TypeError.new(
-                 "expected #{l.inspect} to be a kind_of? Bool (true, or false)"
-               )) unless [TrueClass, FalseClass].include?(l.class)
+           when true, false
+             [[:"dont_#{k}", -> { @config[k] = false }],
+              [:"do_#{k}",   -> { @config[k] = true }],
+              [:"#{k}!",     -> { @config[k] = true }],
+              [:"#{k}?",     -> { @config[k] }],
+              [:"#{k}=",     lambda { |l|
+                unless [TrueClass, FalseClass].include?(l.class)
+                  raise TypeError, "expected #{l.inspect} to be a kind_of? Bool (true, or false)"
+                end
 
-               @config[k] = l
-             }]]
-          else
-            [[:"#{k}=",     ->(l) {
-               raise(TypeError.new(
-                 "expected #{l.inspect} to be a kind_of? #{v.class}"
-               )) unless l.kind_of?(v.class)
+                @config[k] = l
+              }]]
+           else
+             [[:"#{k}=",     lambda { |l|
+                               unless l.is_a?(v.class)
+                                 raise TypeError, "expected #{l.inspect} to be a kind_of? #{v.class}"
+                               end
 
-               @config[k] = l
-             }]]
+                               @config[k] = l
+                             }]]
           end +
-            [[:"#{k}",      ->    { @config[k]}      ]]
+            [[:"#{k}", -> { @config[k] }]]
           ).map do |meth, body|
             rcvr.define_singleton_method(:"#{prefix}#{meth}", &body)
           end
@@ -56,4 +58,3 @@ module Achiever
     end
   end
 end
-

@@ -1,8 +1,10 @@
-require "achiever/badge"
-require "achiever/config"
-require "achiever/engine"
-require "achiever/exceptions"
-require "achiever/helpers"
+# frozen_string_literal: true
+
+require 'achiever/badge'
+require 'achiever/config'
+require 'achiever/engine'
+require 'achiever/exceptions'
+require 'achiever/helpers'
 
 module Achiever
   include Config
@@ -17,10 +19,8 @@ module Achiever
       file = File.open(Rails.root.join(config[:achievements_file]), 'r')
 
       if config[:mtime] < file.mtime
-        @config.merge!(
-          mtime: file.mtime,
-          achievements: YAML.load(file.read)
-        )
+        @config[:mtime] = file.mtime
+        @config[:achievements] = YAML.safe_load(file.read)
       end
 
       file.close

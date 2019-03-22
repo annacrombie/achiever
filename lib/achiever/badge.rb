@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Achiever
   class Badge
     def self.from_attr(attr)
@@ -29,7 +31,6 @@ module Achiever
     end
 
     def icon
-      (
       <<~BADGE
         <div class="badge_icon">
           <span
@@ -40,7 +41,7 @@ module Achiever
           </span>
         </div>
       BADGE
-      ).html_safe
+        .html_safe
     end
   end
 end

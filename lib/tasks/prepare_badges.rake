@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Tasks for preparing badges for use in the app
 #
 # requirements:
@@ -32,14 +34,14 @@ BADGE_OUT = Rails.root.join("public/#{KEY}").to_s
 # Filename of temporary css
 TMPCSS = File.join(TMPDIR, 'badges.css')
 # Output filename for generated css
-CSS_OUT   = Rails.root.join('app/assets/stylesheets/badges.css.erb').to_s
+CSS_OUT = Rails.root.join('app/assets/stylesheets/badges.css.erb').to_s
 
 namespace :achiever do
   namespace :badges do
     desc 'Minify badges'
     task :minify do
       if !File.exist?(TMPDIR) || !File.exist?(MINDIR) ||
-          File.mtime(BADGE_DIR) > File.mtime(MINDIR)
+         File.mtime(BADGE_DIR) > File.mtime(MINDIR)
         sh 'mkdir', '-p', TMPDIR
         sh 'mkdir', '-p', MINDIR
 
@@ -69,31 +71,29 @@ namespace :achiever do
     desc 'Spritify badges'
     task spritify: :minify do
       if !File.exist?(BADGE_OUT) || !File.exist?(CSS_OUT) ||
-          File.mtime(MINDIR) > File.mtime(BADGE_OUT) ||
-          File.mtime(MINDIR) > File.mtime(CSS_OUT)
+         File.mtime(MINDIR) > File.mtime(BADGE_OUT) ||
+         File.mtime(MINDIR) > File.mtime(CSS_OUT)
 
         ssjs = File.join(TMPDIR, 'spritesmith.js')
         File.open(ssjs, 'w') do |f|
           f.write <<~HEREDOC
-          'use strict';
-
-          var util = require('util');
-
-          module.exports = {
-            src: '#{MINDIR}/**/*.png',
-            destImage: '#{TMPSHEET}',
-            destCSS: '#{TMPCSS}',
-            imgPath: "IMGPATH",
-            padding: 2,
-            algorithm: 'binary-tree',
-            algorithmOpts: { sort: false },
-            engine: 'gmsmith',
-            cssOpts: {
-              cssClass: function (item) {
-                return util.format('.badge_icon .%s', item.name);
+            'use strict';
+             var util = require('util');
+             module.exports = {
+              src: '#{MINDIR}/**/*.png',
+              destImage: '#{TMPSHEET}',
+              destCSS: '#{TMPCSS}',
+              imgPath: "IMGPATH",
+              padding: 2,
+              algorithm: 'binary-tree',
+              algorithmOpts: { sort: false },
+              engine: 'gmsmith',
+              cssOpts: {
+                cssClass: function (item) {
+                  return util.format('.badge_icon .%s', item.name);
+                }
               }
             }
-          }
           HEREDOC
         end
 
@@ -104,12 +104,12 @@ namespace :achiever do
           "<%= Rails.env == 'development' ? 'http://localhost:3000/#{KEY}' : 'http://s3.amazonaws.com/#{BUCKET}/#{KEY}' %>"
         ).yield_self { |css| File.write(TMPCSS, css) }
 
-        sh "cp", TMPSHEET, BADGE_OUT
-        sh "cp", TMPCSS, CSS_OUT
+        sh 'cp', TMPSHEET, BADGE_OUT
+        sh 'cp', TMPCSS, CSS_OUT
       end
     end
 
-    desc "Upload badges to aws"
+    desc 'Upload badges to aws'
     task upload: %i[environment spritify] do
       sh(
         'aws', 's3',
@@ -117,10 +117,10 @@ namespace :achiever do
       )
 
       sh(
-         'aws', 's3api', 'put-object-acl',
-         '--bucket', BUCKET,
-         '--key', KEY,
-         '--acl', 'public-read'
+        'aws', 's3api', 'put-object-acl',
+        '--bucket', BUCKET,
+        '--key', KEY,
+        '--acl', 'public-read'
       )
     end
 
