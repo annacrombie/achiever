@@ -7,7 +7,7 @@ module Achiever
       mtime: Time.at(0),
       achievements_file: 'config/achievements.yml'
     }.freeze
-    PRIVATE = %i[achievements mtime].freeze
+    PRIVATE = %i[data mtime].freeze
 
     class << self
       def append_features(rcvr, names: %i[config configure], prefix: :'')

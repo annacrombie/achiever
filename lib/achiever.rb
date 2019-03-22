@@ -5,9 +5,11 @@ require 'achiever/config'
 require 'achiever/engine'
 require 'achiever/exceptions'
 require 'achiever/helpers'
+require 'achiever/validator'
 
 module Achiever
   include Config
+
   class<<self
     def validate(achievement)
       unless achievements.key?(achievement)
@@ -15,17 +17,26 @@ module Achiever
       end
     end
 
-    def achievements
+    def config_file
       file = File.open(Rails.root.join(config[:achievements_file]), 'r')
 
       if config[:mtime] < file.mtime
         @config[:mtime] = file.mtime
-        @config[:achievements] = YAML.safe_load(file.read)
+
+        data = YAML.safe_load(file.read)
+
+        Validator.new(data).validate
+
+        @config[:data] = data
       end
 
       file.close
 
-      @config[:achievements]
+      @config[:data]
+    end
+
+    def achievements
+      config_file['achievements']
     end
 
     def achievement(name)
