@@ -1,36 +1,11 @@
 module Achiever
   class Validator
-    module InvalidConfig
-      class WrongType < StandardError
-        def initialize(thing, type)
-          super("got #{thing} (#{thing.class}), expected #{type}")
-        end
-      end
-
-      class MissingKey < StandardError
-        def initialize(key, loc)
-          super("the key #{key.inspect} missing at #{loc}")
-        end
-      end
-
-      class ExtraKey < StandardError
-        def initialize(key, loc)
-          super("the key #{key.inspect} is invalid at #{loc}")
-        end
-      end
-
-      class SlotError < StandardError
-        def initialize(msg)
-          super(msg)
-        end
-      end
-    end
-
+    include Exceptions
     TYPES = %w[accumulation slotted]
     VISIBILITIES = %w[hidden visible]
 
-    def self.validate
-      new(Achiever.config_file).validate
+    def self.validate(filename)
+      new(YAML.safe_load(File.read(filename))).validate
     end
 
     def initialize(config)
@@ -56,7 +31,7 @@ module Achiever
     end
 
     def check_keys(allowed, required, hash, loc)
-      required.each do |k, v|
+      required.each do |k|
         raise(InvalidConfig::MissingKey.new(k, loc)) unless hash.key?(k)
       end
 
@@ -124,12 +99,14 @@ module Achiever
       check_keys(allowed, required, ach, "achievment #{name}")
 
       ach['badges'].each do |bdg|
+        raise(InvalidConfig::WrongType.new(bdg, Hash)) unless bdg.is_a?(Hash)
         check_badge(bdg, ach.merge("name" => name))
       end
     end
 
     def check_achievements
       @config['achievements'].each do |name, ach|
+        raise(InvalidConfig::WrongType.new(ach, Hash)) unless ach.is_a?(Hash)
         check_achievement(ach, name)
       end
     end

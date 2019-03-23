@@ -1,0 +1,8 @@
+---
+config:
+  defaults:
+achievements:
+  name:
+    badges:
+      - required: 1
+random_key: random_value
