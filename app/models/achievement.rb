@@ -2,8 +2,9 @@
 
 class Achievement < ApplicationRecord
   validate :valid_achievement_name
+
   def valid_achievement_name
-    unless Achiever.achievements.key?(name)
+    unless Achiever.achievements.key?(name.to_sym)
       errors.add(:name, "no such achievement '#{name}'")
     end
   end
@@ -21,24 +22,14 @@ class Achievement < ApplicationRecord
   end
 
   def visible_badges
-    if Achiever.achievement(name)['visibility'] == 'visible'
-      all_badges
-    else
-      badges
-    end
-  end
-
-  def badges_count
-    Achiever.achievement(name)['badges'].reduce(0) do |c, badge|
-      progress >= badge['required'] ? c + 1 : c
-    end
+    cfg[:visibility] == 'visible' ? all_badges : badges
   end
 
   def new_badges
-    Achiever.achievement(name)['badges'].map do |badge|
-      if badge['required'] > notified_progress &&
-         badge['required'] <= progress
-        Achiever::Badge.new(name, badge['required'], progress)
+    cfg[:badges].map do |badge|
+      if !Achiever.attained_badge?(name, badge[:required], progress) &&
+          Achiever.attained_badge?(name, badge[:required], notified_progress)
+        Achiever::Badge.new(name, badge[:required], progress)
       end
     end.compact
   end
@@ -47,8 +38,7 @@ class Achievement < ApplicationRecord
     update(notified_progress: progress)
   end
 
-  def achieve(new_progress)
-    self[:progress] += new_progress
-    save
+  def cfg
+    @cfg ||= Achiever.achievement(name)
   end
 end

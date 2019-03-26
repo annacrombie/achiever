@@ -8,6 +8,12 @@ module Achiever
       end
     end
 
+    class InvalidSlot < StandardError
+      def initialize(slot)
+        super("The slot #{slot} is not valid")
+      end
+    end
+
     module InvalidConfig
       class WrongType < StandardError
         def initialize(thing, type)

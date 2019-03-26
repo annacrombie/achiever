@@ -18,15 +18,18 @@ module Achiever
     end
 
     def initialize(name, required, have)
+      cfg = Achiever.achievement(name)
+      badge_id = cfg[:badges].index { |b| b[:required] == required }
+
       @attr = {
-        name: I18n.t("achievements.#{name}.badges.#{required}.name"),
-        desc: I18n.t("achievements.#{name}.desc", count: required),
-        img: Achiever.badge_attr(name, required)['img'],
-        visibility: Achiever.achievement(name)['visibility'],
+        name: I18n.t("achiever.achievements.#{name}.badges")[badge_id][:name],
+        desc: I18n.t("achiever.achievements.#{name}.desc", count: required),
+        img: cfg[:badges][badge_id][:img],
+        visibility: cfg['visibility'],
         required: required,
         have: have,
         achievement: name,
-        achieved: have >= required
+        achieved: Achiever.attained?(name, required, have)
       }
     end
 

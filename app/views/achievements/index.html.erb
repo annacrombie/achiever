@@ -3,8 +3,12 @@
   <% @achievements.each do |name, badges| %>
     <div class="badge_shelf">
       <span class="achievement_title">
-        <%= t("achievements.#{name}.title") %>
-        <%= "#{badges.first.have} / #{badges.max_by(&:required).required}" %>
+        <%= t("achiever.achievements.#{name}.title") %>
+        <% if Achiever.achievement(name)[:type] == 'slotted' %>
+          <%= "#{badges.first.have.to_s(2).count('1')} / #{Achiever.achievement(name)[:slots].length}" %>
+        <% else %>
+          <%= "#{badges.first.have} / #{badges.max_by(&:required).required}" %>
+        <% end %>
       </span>
       <div class="badge_boxes">
         <% badges.each do |badge| %>

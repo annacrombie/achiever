@@ -1,140 +1,129 @@
----
-logins:
-  badges:
-    - required: 1
-      img: badge_rolecall
-    - required: 5
-      img: badge_regular
-    - required: 15
-      img: badge_firstnamebasis
-    - required: 30
-      img: badge_vip
-  visibility: visible
+config:
+  achievement_defaults:
+    type: accumulation
+    visibility: visible
+  badge_defaults:
+    img: dummy_1
 
-profile_picture:
-  badges:
-    - required: 1
-      img: dummy_1
-  visibility: visible
+achievements:
+  logins:
+    badges:
+      - required: 1
+        img: badge_rolecall
+      - required: 5
+        img: badge_regular
+      - required: 15
+        img: badge_firstnamebasis
+      - required: 30
+        img: badge_vip
 
-profile:
-  badges:
-    - required: 2
-      img: dummy_2
-  visibility: visible
+  profile:
+    type: slotted
+    slots:
+      - profile_picture
+      - phone_number
+    badges:
+      - required: profile_picture
+        img: dummy_1
+      - required:
+        - profile_picture
+        - phone_number
+        img: dummy_2
 
-risk_quiz:
-  badges:
-    - required: 1
-      img: dummy_3
-  visibility: visible
+  risk_quiz:
+    badges:
+      - required: 1
+        img: dummy_3
 
-courses:
-  badges:
-    - required: 5
-      img: dummy_4
-    - required: 10
-      img: dummy_5
-    - required: 20
-      img: dummy_6
-    - required: 30
-      img: dummy_7
-    - required: 40
-      img: dummy_8
-    - required: 50
-      img: dummy_9
-  visibility: visible
+  courses:
+    badges:
+      - required: 5
+        img: dummy_4
+      - required: 10
+        img: dummy_5
+      - required: 20
+        img: dummy_6
+      - required: 30
+        img: dummy_7
+      - required: 40
+        img: dummy_8
+      - required: 50
+        img: dummy_9
 
-course_groups:
-  badges:
-    - required: 1
-      img: dummy_10
-    - required: 2
-      img: dummy_11
-    - required: 3
-      img: dummy_12
-    - required: 4
-      img: dummy_13
-    - required: 5
-      img: dummy_15
-  visibility: visible
+  course_groups:
+    badges:
+      - required: 1
+        img: dummy_10
+      - required: 2
+        img: dummy_11
+      - required: 3
+        img: dummy_12
+      - required: 4
+        img: dummy_13
+      - required: 5
+        img: dummy_15
 
-leaderboard_first:
-  badges:
-    - required: 1
-      img: dummy_18
-  visibility: visible
+  leaderboard:
+    type: slotted
+    slots:
+      - first
+      - second
+      - third
+    badges:
+      - required: first
+        img: dummy_18
+      - required: second
+        img: dummy_16
+      - required: third
+        img: dummy_16
 
-leaderboard_second:
-  badges:
-    - required: 1
-      img: dummy_16
-  visibility: visible
+  coins:
+    badges:
+      - required: 500
+        img: dummy_19
+      - required: 1000
+        img: dummy_20
+      - required: 1500
+        img: dummy_21
+      - required: 3000
+        img: dummy_22
 
-leaderboard_third:
-  badges:
-    - required: 1
-      img: dummy_17
-  visibility: visible
+  lives:
+    badges:
+      - required: 3
+        img: dummy_24
 
-coins:
-  badges:
-    - required: 500
-      img: dummy_19
-    - required: 1000
-      img: dummy_20
-    - required: 1500
-      img: dummy_21
-    - required: 3000
-      img: dummy_22
-  visibility: visible
+  nxtq_quizzes_correct:
+    badges:
+      - required: 5
+        img: dummy_25
+      - required: 15
+        img: dummy_26
+      - required: 30
+        img: dummy_27
+      - required: 40
+        img: dummy_28
 
-lives:
-  badges:
-    - required: 3
-      img: dummy_24
-  visibility: visible
+  nxtq_quiz_attempts:
+    badges:
+      - required: 10
+        img: dummy_29
+      - required: 25
+        img: dummy_30
 
-nxtq_quizzes_correct:
-  badges:
-    - required: 5
-      img: dummy_25
-    - required: 15
-      img: dummy_26
-    - required: 30
-      img: dummy_27
-    - required: 40
-      img: dummy_28
-  visibility: visible
+  notifications:
+    badges:
+      - required: 3
+        img: dummy_1
 
-nxtq_quiz_attempts:
-  badges:
-    - required: 10
-      img: dummy_29
-    - required: 25
-      img: dummy_30
-  visibility: visible
+  account_owner:
+    badges:
+      - required: 1
+        img: dummy_2
 
-notifications:
-  badges:
-    - required: 1
-      img: dummy_1
-  visibility: visible
-
-account_owner:
-  badges:
-    - required: 1
-      img: dummy_2
-  visibility: hidden
-
-phishing:
-  badges:
-    - required: 1
-      img: dummy_3
-    - required: 2
-      img: dummy_4
-    - required: 3
-      img: dummy_5
-    - required: 4
-      img: dummy_6
-  visibility: visible
+  phishing:
+    badges:
+      - required: 1
+      - required: 2
+      - required: 3
+      - required: 4

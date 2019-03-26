@@ -1,179 +1,123 @@
 en:
-  achievements:
+  achiever:
     congratulations: Congratulations, you earned %{name}
     view_all: View all achievements
-    logins:
-      title: Log in
-      badges:
-        1:
-          name: Roll Call
-        5:
-          name: Regular
-        15:
-          name: First Name Basis
-        30:
-          name: VIP
-      desc:
-        one: Login once
-        other: "Login %{count} times"
+    achievements:
+      logins:
+        title: Log in
+        badges:
+          - name: Roll Call
+          - name: Regular
+          - name: First Name Basis
+          - name: VIP
+        desc:
+          one: Login once
+          other: "Login %{count} times"
 
-    profile_picture:
-      title: Profile picture
-      badges:
-        1:
-          name: Picture Perfect
-      desc:
-        one: Add a profile picture
+      profile:
+        title: Profile picture
+        badges:
+          - name: Picture Perfect
+            desc: Add a profile picture
+          - name: Kind of a Big Deal
+            desc: Complete your profile
 
-    profile:
-      title: Profile
-      badges:
-        2:
-          name: Kind of a Big Deal
-      desc:
-        other: Complete your profile
+      risk_quiz:
+        title: Risk quiz
+        badges:
+          - name: Combat Ready
+        desc: Complete your risk quiz
 
-    risk_quiz:
-      title: Risk quiz
-      badges:
-        1:
-          name: Combat Ready
-      desc:
-        one: Complete your risk quiz
+      courses:
+        title: Courses
+        badges:
+          - name: Soldier
+          - name: Lieutenant
+          - name: Captain
+          - name: Major
+          - name: Colonel
+          - name: General
+        desc:
+          one: "Completed %{count} course"
+          other: "Completed %{count} courses"
 
-    courses:
-      title: Courses
-      badges:
-        5:
-          name: Soldier
-        10:
-          name: Lieutenant
-        20:
-          name: Captain
-        30:
-          name: Major
-        40:
-          name: Colonel
-        50:
-          name: General
-      desc:
-        one: "Completed %{count} course"
-        other: "Completed %{count} courses"
+      course_groups:
+        title: Course groups
+        badges:
+          - name: Karate Kid
+          - name: Apprentice
+          - name: Jedi Knight
+          - name: Grand Master
+          - name: Sage
+        desc:
+          one: "Complete %{count} course group"
+          other: "Complete %{count} course groups"
 
-    course_groups:
-      title: Course groups
-      badges:
-        1:
-          name: Karate Kid
-        2:
-          name: Apprentice
-        3:
-          name: Jedi Knight
-        4:
-          name: Grand Master
-        5:
-          name: Sage
-      desc:
-        one: "Complete %{count} course group"
-        other: "Complete %{count} course groups"
+      leaderboard:
+        title: NXTQ Leaderboard
+        badges:
+          - name: Gold Medal
+            desc: Be the very best
+          - name: Silver Medal
+            desc: Get second place on the leaderboard
+          - name: Bronze Medal
+            desc: Get third place on the leaderboard
 
-    leaderboard_first:
-      title: NXTQ Leaderboard
-      badges:
-        1:
-          name: Gold Medal
-      desc:
-        one: Be the very best
-    leaderboard_second:
-      title: NXTQ Leaderboard
-      badges:
-        1:
-          name: Silver Medal
-      desc:
-        one: Get second place on the leaderboard
-    leaderboard_third:
-      title: NXTQ Leaderboard
-      badges:
-        1:
-          name: Bronze Medal
-      desc:
-        one: Get third place on the leaderboard
+      coins:
+        title: Coins
+        badges:
+          - name: Chunk of Change
+          - name: Money to Burn
+          - name: Deep Pockets
+          - name: Richie Rich
+        desc: "Earn %{count} coins"
 
-    coins:
-      title: Coins
-      badges:
-        500:
-          name: Chunk of Change
-        1000:
-          name: Money to Burn
-        1500:
-          name: Deep Pockets
-        3000:
-          name: Richie Rich
-      desc:
-        other: "Earn %{count} coins"
+      lives:
+        title: Free Lives
+        badges:
+          - name: Die Hard
+        desc: "Receive %{count} extra lives"
 
-    lives:
-      title: Free Lives
-      badges:
-        3:
-          name: Die Hard
-      desc:
-        other: "Receive %{count} extra lives"
+      nxtq_quizzes_correct:
+        title: Correct NXTQ Quizzes
+        badges:
+          - name: Smart Cookie
+          - name: Ace
+          - name: Genius
+          - name: Einstein
+        desc:
+          one: "%{count} NXTQ quiz correct"
+          other: "%{count} NXTQ quizzes correct"
 
-    nxtq_quizzes_correct:
-      title: Correct NXTQ Quizzes
-      badges:
-        5:
-          name: Smart Cookie
-        15:
-          name: Ace
-        30:
-          name: Genius
-        40:
-          name: Einstein
-      desc:
-        one: "%{count} NXTQ quiz correct"
-        other: "%{count} NXTQ quizzes correct"
+      nxtq_quiz_attempts:
+        title: Attempted NXTQ Quizzes
+        badges:
+          - name: Trivial Pursuit
+          - name: Gamer
+        desc:
+          one: "Attempt %{count} NXTQ quiz"
+          other: "Attempt %{count} NXTQ quizzes"
 
-    nxtq_quiz_attempts:
-      title: Attempted NXTQ Quizzes
-      badges:
-        10:
-          name: Trivial Pursuit
-        25:
-          name: Gamer
-      desc:
-        one: "Attempt %{count} NXTQ quiz"
-        other: "Attempt %{count} NXTQ quizzes"
+      notifications:
+        title: Notification Settings
+        badges:
+          - name: Eager Beaver
+        desc: Enable all notification settings
 
-    notifications:
-      title: Notification Settings
-      badges:
-        1:
-          name: Eager Beaver
-      desc:
-        one: Enable all notification settings
+      account_owner:
+        title: CIO
+        badges:
+          - name: Chief Intelligence Officer
+        desc:
+          one: Be an Account Owner
 
-    account_owner:
-      title: CIO
-      badges:
-        1:
-          name: Chief Intelligence Officer
-      desc:
-        one: Be an Account Owner
-
-    phishing:
-      title: Phishing tests
-      badges:
-        1:
-          name: Safety First
-        2:
-          name: Good Defense
-        3:
-          name: Not On My Watch
-        4:
-          name: Catch Me If You Can
-      desc:
-        one: "Pass %{count} phishing test"
-        other: "Pass %{count} phishing tests"
+      phishing:
+        title: Phishing tests
+        badges:
+          - name: Safety First
+          - name: Good Defense
+          - name: Not On My Watch
+          - name: Catch Me If You Can
+        desc:
+          one: "Pass %{count} phishing test"
+          other: "Pass %{count} phishing tests"

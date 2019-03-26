@@ -3,10 +3,12 @@
 module Achiever
   module Helpers
     def has_achievement?(name)
+      name = name.to_sym
       achievements.exists?(name: name)
     end
 
     def achievement(name)
+      name name.to_sym
       achievements.find_by(name: name)
     end
 
@@ -22,7 +24,7 @@ module Achiever
           name,
           if has_achievement?(name)
             achievement(name).visible_badges
-          elsif props['visibility'] == 'visible'
+          elsif props[:visibility] == 'visible'
             Achiever.badges(name)
           end
         ]
@@ -47,14 +49,36 @@ module Achiever
       achievements.each(&:clear_new_badges)
     end
 
-    attr_accessor :recent_achievements
-
-    def achieve(name, progress: 1)
+    def achieve(name, progress = nil, set: nil)
+      name = name.to_sym
       if has_achievement?(name)
         achievement(name)
       else
         Achievement.new(name: name, user_id: id)
-      end.achieve(progress)
+      end.yield_self do |ach|
+        case ach.cfg[:type]
+        when 'slotted'
+          raise(
+            TypeError,
+            "The achievement #{name} requires a Symbol progress"
+          ) unless progress.is_a?(Symbol)
+
+          raise(
+            Exceptions::InvalidSlot, "#{progress}"
+          ) unless ach.cfg[:slots].include?(progress)
+
+          ach.update(progress: ach.progress | (2 ** (ach.cfg[:slots].index(progress) + 1)))
+        when 'accumulation'
+          progress = progress.nil? ? 1 : progress
+
+          raise(
+            TypeError,
+            "The achievement #{name} requires an Integer progress"
+          ) unless progress.is_a?(Integer)
+
+          ach.update(progress: ach.progress + progress)
+        end
+      end
     end
   end
 end
