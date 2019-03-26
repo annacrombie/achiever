@@ -16,9 +16,10 @@ Gem::Specification.new do |spec|
 
   spec.files = Dir['{app,config,db,lib}/**/*', 'MIT-LICENSE', 'Rakefile', 'README.md']
 
+  spec.add_dependency 'hash_validator'
+  spec.add_dependency 'kaicho'
   spec.add_dependency 'rails', '~> 5.2.2'
   spec.add_dependency 'sass'
-  spec.add_dependency 'kaicho'
   spec.add_dependency 'settei'
 
   spec.add_development_dependency 'rspec-rails', '~> 3.8'
