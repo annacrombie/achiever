@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'hash_validator'
 require 'kaicho'
 require 'settei'
 
@@ -8,11 +9,11 @@ require 'achiever/badge'
 require 'achiever/engine'
 require 'achiever/exceptions'
 require 'achiever/helpers'
-require 'achiever/validator'
+require 'achiever/config_validator'
 
 module Achiever
   class<<self
-    def validate(achievement)
+    def check_name(achievement)
       unless achievements.key?(achievement)
         raise(Exceptions::InvalidAchievementName, achievement)
       end
@@ -25,7 +26,7 @@ module Achiever
 
     def achievement(name)
       name = name.to_sym
-      validate(name)
+      check_name(name)
       achievements[name]
     end
 

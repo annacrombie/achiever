@@ -14,29 +14,20 @@ module Achiever
       end
     end
 
-    module InvalidConfig
-      class WrongType < StandardError
-        def initialize(thing, type)
-          super("got #{thing} (#{thing.class}), expected #{type}")
-        end
+    class InvalidConfig < StandardError
+      def initialize(errors)
+        super(hash_to_s(errors))
       end
 
-      class MissingKey < StandardError
-        def initialize(key, loc)
-          super("the key #{key.inspect} missing at #{loc}")
-        end
-      end
-
-      class ExtraKey < StandardError
-        def initialize(key, loc)
-          super("the key #{key.inspect} is invalid at #{loc}")
-        end
-      end
-
-      class SlotError < StandardError
-        def initialize(msg)
-          super(msg)
-        end
+      def hash_to_s(hash, pre = '')
+        hash.map do |k, v|
+          case v
+          when Hash
+            hash_to_s(v, "#{pre}[#{k}]")
+          else
+            "#{pre}[#{k}] - #{v}"
+          end
+        end.join("\n")
       end
     end
   end

@@ -2,10 +2,12 @@ module Achiever
   class Achievements
     include(Settei.cfg(
       file: 'config/achievements.yml',
-      badge_defaults: { img: '' },
-      achievement_defaults: {
-        type: 'accumulation',
-        visibility: 'visible'
+      defaults: {
+        badge: { img: '' },
+        achievement: {
+          type: 'accumulation',
+          visibility: 'visible'
+        }
       }
     ) { |s| s.private += %i[data mtime] })
 
@@ -23,16 +25,17 @@ module Achiever
       file = File.open(Rails.root.join(Achievements.file), 'r')
       data = YAML.safe_load(file.read)
 
-      Validator.new(data).validate
+      ConfigValidator.valid!(data)
+
       data
     end
 
     def_resource(:cfg, accessors: :none, depends: { data: :keep }) do
-      if data.key?('config')
+      if data.key?('config') && data['config'].key?('defaults')
         %w[achievement badge].each do |d|
-          if data['config'].key?("#{d}_defaults")
-            Achievements.config[:"#{d}_defaults"].merge!(
-              data['config']["#{d}_defaults"].transform_keys(&:to_sym)
+          if data['config']['defaults'].key?(d)
+            Achievements.config[:defaults][d.to_sym].merge!(
+              data['config']['defaults'][d].transform_keys(&:to_sym)
             )
           end
         end
