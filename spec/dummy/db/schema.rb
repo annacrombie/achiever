@@ -12,6 +12,15 @@
 
 ActiveRecord::Schema.define(version: 2019_03_26_165814) do
 
+  create_table "achievements", force: :cascade do |t|
+    t.string "name", null: false
+    t.integer "user_id", null: false
+    t.integer "progress", default: 0, null: false
+    t.integer "notified_progress", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "achiever_achievements", force: :cascade do |t|
     t.string "name", null: false
     t.integer "user_id", null: false
