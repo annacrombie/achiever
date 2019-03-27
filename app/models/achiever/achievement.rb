@@ -14,11 +14,11 @@ module Achiever
     end
 
     def badges
-      Achiever.badges(name, have: progress).select(&:achieved)
+      Achiever.badges(name, have: progress).select(&:achieved?)
     end
 
     def remaining_badges
-      Achiever.badges(name, have: progress).reject(&:achieved)
+      Achiever.badges(name, have: progress).reject(&:achieved?)
     end
 
     def all_badges
