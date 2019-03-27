@@ -22,7 +22,7 @@ TMPCSS = File.join(TMPDIR, 'badges.css')
 namespace :achiever do
   namespace :badges do
     desc 'Minify badges'
-    task :minify do
+    task minify: :environment do
       badge_dir = Rails.root.join(Achiever.icon_cfg[:source]).to_s
       width     = Achiever.icon_cfg[:output][:width].to_s
 
@@ -55,7 +55,7 @@ namespace :achiever do
     end
 
     desc 'Spritify badges'
-    task spritify: :minify do
+    task spritify: %i[minify environment] do
       key = Achiever.icon_cfg[:output][:image]
       badge_out = Rails.root.join(Achiever.icon_cfg[:output][:dir], key).to_s
       css_out = Rails.root.join(Achiever.icon_cfg[:output][:css]).to_s
