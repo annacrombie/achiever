@@ -6,12 +6,24 @@ require 'settei'
 
 require 'achiever/achievements'
 require 'achiever/badge'
+require 'achiever/config_validator'
 require 'achiever/engine'
 require 'achiever/exceptions'
 require 'achiever/helpers'
-require 'achiever/config_validator'
+require 'achiever/util'
 
 module Achiever
+  include Settei.cfg(
+    file: 'config/achievements.yml',
+    defaults: {
+      badge: { img: '' },
+      achievement: {
+        type: 'accumulation',
+        visibility: 'visible'
+      }
+    })
+
+
   class<<self
     def check_name(achievement)
       unless achievements.key?(achievement)
