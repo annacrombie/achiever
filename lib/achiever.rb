@@ -61,7 +61,7 @@ module Achiever
       cfg = achievement(name)
       case cfg[:type]
       when 'slotted'
-        have & reqd == have
+        reqd & have == reqd
       when 'accumulation'
         have >= reqd
       end
