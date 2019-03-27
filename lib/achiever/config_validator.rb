@@ -3,6 +3,19 @@ module Achiever
     TYPES = %w[slotted accumulation]
     VISIBILITIES = %w[hidden visible]
 
+    class EnumValidator < HashValidator::Validator::Base
+      def initialize(name, allowed)
+        @allowed = allowed
+        super(name)
+      end
+
+      def validate(key, value, validations, errors)
+        unless @allowed.include?(value)
+          errors[key] = "expected one of #{@allowed.map(&:inspect)}, got #{value.inspect}"
+        end
+      end
+    end
+
     class BadgeRequirementsValidator < HashValidator::Validator::Base
       include ConfigValidator
 
@@ -48,7 +61,7 @@ module Achiever
             v,
             {
               required: 'badge_requirements',
-              visibility: optional(VISIBILITIES),
+              visibility: optional('visibility'),
               img: optional('string')
             },
             true
@@ -77,8 +90,8 @@ module Achiever
             v,
             {
               badges: 'badges',
-              type: optional(TYPES),
-              visibility: optional(TYPES),
+              type: optional('type'),
+              visibility: optional('visibility'),
               slots: optional('slots'),
             },
             true
@@ -92,6 +105,8 @@ module Achiever
     [ AchievementsValidator.new,
       BadgesValidator.new,
       SlotsValidator.new,
+      EnumValidator.new('type', TYPES),
+      EnumValidator.new('visibility', VISIBILITIES),
       BadgeRequirementsValidator.new ].each { |v| HashValidator.append_validator(v) }
 
     module_function
@@ -118,8 +133,8 @@ module Achiever
         defaults: optional({
           achievement: optional({
             desc: optional('string'),
-            type: optional(TYPES),
-            visibility: optional(VISIBILITIES)
+            type: optional('type'),
+            visibility: optional('visibility')
           }),
           badge: optional({
             img: optional('string')
