@@ -7,12 +7,10 @@ module Achiever
     end
 
     def has_achievement?(name)
-      name = name.to_sym
       achievements.exists?(name: name)
     end
 
     def achievement(name)
-      name name.to_sym
       achievements.find_by(name: name)
     end
 
