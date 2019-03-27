@@ -1,5 +1,5 @@
 RSpec.describe Achiever do
-  context Achiever::Achievements do
+  context Achiever::Config do
     it 'adds in default values' do
       expect(Achiever.achievement(:logins)[:visibility]).to eq('visible')
     end

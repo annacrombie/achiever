@@ -1,5 +1,5 @@
 module Achiever
-  class Achievements
+  class Config
     include Kaicho
 
     def old_file?

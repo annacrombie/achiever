@@ -4,8 +4,8 @@ require 'hash_validator'
 require 'kaicho'
 require 'settei'
 
-require 'achiever/achievements'
 require 'achiever/badge'
+require 'achiever/config'
 require 'achiever/config_validator'
 require 'achiever/engine'
 require 'achiever/exceptions'
@@ -41,9 +41,12 @@ module Achiever
       end
     end
 
+    def disk_config
+      @disk_config ||= Config.new
+    end
+
     def achievements
-      @achievements ||= Achievements.new
-      @achievements.achievements
+      disk_config.achievements
     end
 
     def achievement(name)
