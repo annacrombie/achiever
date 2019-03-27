@@ -2,31 +2,33 @@
 
 module Achiever
   class Badge
+    attr_reader :achievement, :required, :have
+
     def initialize(achievement, required, have)
-      @ach = achievement
-      @rqd = required
-      @hve = have
+      @achievement = achievement
+      @required = required
+      @have = have
     end
 
     def badge_id
-      @badge_id ||= cfg[:badges].index { |b| b[:required] == @rqd }
+      @badge_id ||= cfg[:badges].index { |b| b[:required] == required }
     end
 
     def cfg
-      @cfg ||= Achiever.achievement(@ach)
+      @cfg ||= Achiever.achievement(achievement)
     end
 
     def name
       tl =
         catch(:exception) do
-          I18n.t("achiever.achievements.#{@ach}.badges", throw: true)
+          I18n.t("achiever.achievements.#{achievement}.badges", throw: true)
         end
 
-      @name ||= tl.is_a?(I18n::MissingTranslation) ? tl.message : val[badge_id][:name]
+      @name ||= tl.is_a?(I18n::MissingTranslation) ? tl.message : tl[badge_id][:name]
     end
 
     def desc
-      @desc ||= I18n.t("achiever.achievements.#{@ach}.desc", count: @rqd)
+      @desc ||= I18n.t("achiever.achievements.#{achievement}.desc", count: required)
     end
 
     def img
@@ -38,7 +40,7 @@ module Achiever
     end
 
     def achieved?
-      @achieved ||= Logic.attained?(@ach, @rqd, @hve)
+      @achieved ||= Logic.attained?(achievement, required, have)
     end
 
     def attr
@@ -47,9 +49,9 @@ module Achiever
         desc: desc,
         img: img,
         visibility: visibility,
-        required: @rqd,
-        have: @hve,
-        achievement: @ach,
+        required: required,
+        have: have,
+        achievement: achievement,
         achieved: achieved?
       }
     end
