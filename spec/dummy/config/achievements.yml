@@ -121,6 +121,7 @@ achievements:
     badges:
       - required: 1
         img: dummy_2
+    visibility: hidden
 
   phishing:
     badges:
