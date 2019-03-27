@@ -1,6 +1,5 @@
 require 'simplecov'
-SimpleCov.add_filter 'spec/dummy'
-SimpleCov.add_filter 'spec/spec_helper'
+SimpleCov.add_filter 'spec'
 SimpleCov.add_filter 'config/routes'
 SimpleCov.start
 
