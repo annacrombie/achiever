@@ -27,7 +27,7 @@ module Achiever
     end
 
     def cumulative_progress(old, inc)
-      old + new
+      old + inc
     end
   end
 end
