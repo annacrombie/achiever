@@ -28,12 +28,12 @@ module Achiever
       @img ||= cfg[:badges][badge_id][:img]
     end
 
-    def visibilty
-      @visibility ||= cfg['visibility']
+    def visibility
+      @visibility ||= cfg[:visibility]
     end
 
     def achieved?
-      @achieved ||= Achiever.attained?(@ach, @rqd, @hve)
+      @achieved ||= Logic.attained?(@ach, @rqd, @hve)
     end
 
     def attr

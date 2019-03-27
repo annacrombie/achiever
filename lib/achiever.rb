@@ -10,6 +10,7 @@ require 'achiever/config_validator'
 require 'achiever/engine'
 require 'achiever/exceptions'
 require 'achiever/helpers'
+require 'achiever/logic'
 require 'achiever/util'
 
 module Achiever
@@ -61,23 +62,9 @@ module Achiever
       end
     end
 
-    def badge_attr(name, reqd)
-      achievement(name)[:badges].detect { |e| e[:required] == reqd }
-    end
-
-    def badge(name, reqd)
-      bdg = badge_attr(name, reqd)
-      Badge.new(name, bdg[:required], 0)
-    end
-
-    def attained?(name, reqd, have)
-      cfg = achievement(name)
-      case cfg[:type]
-      when 'slotted'
-        reqd & have == reqd
-      when 'accumulation'
-        have >= reqd
-      end
+    def badge(name, reqd, have: 0)
+      bdg = achievement(name)[:badges].detect { |e| e[:required] == reqd }
+      Badge.new(name, bdg[:required], have)
     end
   end
 end
