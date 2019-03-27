@@ -34,7 +34,8 @@ module Achiever
 
       achievement[:badges].each do |b|
         b[:required_slots] =
-          b[:required].is_a?(Array) ? b[:required] : [b[:required]]
+          (b[:required].is_a?(Array) ? b[:required] : [b[:required]])
+            .map(&:to_sym)
 
         b[:required] =
           achievement[:slots].each_with_index.map do |e, i|
