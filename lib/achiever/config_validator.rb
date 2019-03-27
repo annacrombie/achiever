@@ -96,22 +96,6 @@ module Achiever
 
     module_function
 
-    def deep_keys_to_sym(hash)
-      hash.map do |k, v|
-        [
-          k.to_sym,
-          case v
-          when Hash
-            deep_keys_to_sym(v)
-          when Array
-            v.map { |e| e.is_a?(Hash) ? deep_keys_to_sym(e) : e }
-          else
-            v
-          end
-        ]
-      end.to_h
-    end
-
     def optional(validation)
       HashValidator.optional(validation)
     end
@@ -121,7 +105,7 @@ module Achiever
     end
 
     def validate(hash)
-      HashValidator.validate(deep_keys_to_sym(hash), VALIDATIONS, true)
+      HashValidator.validate(hash, VALIDATIONS, true)
     end
 
     def valid!(hash)

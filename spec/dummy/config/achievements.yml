@@ -1,9 +1,10 @@
 config:
-  achievement_defaults:
-    type: accumulation
-    visibility: visible
-  badge_defaults:
-    img: dummy_1
+  defaults:
+    achievement:
+      type: accumulation
+      visibility: visible
+    badge:
+      img: dummy_1
 
 achievements:
   logins:

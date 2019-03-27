@@ -4,6 +4,10 @@ module Helpers
   end
 
   def validate(path)
-    Achiever::ConfigValidator.validate(YAML.load(File.read(cf(path))))
+    Achiever::ConfigValidator.validate(
+      Achiever::Util.deep_keys_to_sym(
+        YAML.load(
+          File.read(
+            cf(path)))))
   end
 end
