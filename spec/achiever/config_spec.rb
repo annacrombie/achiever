@@ -37,13 +37,15 @@ RSpec.describe Achiever::Config do
       data = @config.instance_variable_get(:@data)
       data[:achievements][:new] = { badges: [{ required: 2 }] }
 
-      File.write(@file, YAML.dump(deep_keys_to_s(data)))
+      @mutex.synchronize do
+        File.write(@file, YAML.dump(deep_keys_to_s(data)))
 
-      expect(@config.old_file?).to eq(true)
+        expect(@config.old_file?).to eq(true)
 
-      @config.instance_variable_set(:@mtime, Time.at(0))
+        @config.instance_variable_set(:@mtime, Time.at(0))
 
-      expect(@config.achievements).to have_key(:new)
+        expect(@config.achievements).to have_key(:new)
+      end
     end
   end
 
@@ -51,7 +53,7 @@ RSpec.describe Achiever::Config do
     it 'propogates defaults' do
       file = '../achiever/configs/default_spec.yml'
 
-      Mutex.new.synchronize do
+      @mutex.synchronize do
         Achiever.defaults[:achievement][:type] = 'slotted'
         config = Achiever::Config.new(file)
 
