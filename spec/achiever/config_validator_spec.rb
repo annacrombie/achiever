@@ -6,12 +6,18 @@ RSpec.describe Achiever::ConfigValidator do
     ['extra_random_key.yml'],
     ['invalid_visibility.yml'],
     ['invalid_type.yml'],
-    #['invalid_badge_slots_1.yml'],
-    #['invalid_badge_slots_2.yml'],
+    ['invalid_badge_slots_1.yml'],
+    ['invalid_badge_slots_2.yml'],
   ].each do |c|
     context c do
       it 'should not be valid' do
-        expect(validate(c)).not_to be_valid
+        expect(Achiever::ConfigValidator.validate(load_yaml(c))).not_to be_valid
+      end
+
+      it 'raises an exception' do
+        expect { Achiever::ConfigValidator.valid!(load_yaml(c)) }.to raise_exception(
+          Achiever::Exceptions::InvalidConfig
+        )
       end
     end
   end
@@ -21,7 +27,7 @@ RSpec.describe Achiever::ConfigValidator do
   ].each do |c|
     context c do
       it 'should be valid' do
-        expect(validate(c)).to be_valid
+        expect(Achiever::ConfigValidator.valid?(load_yaml(c))).to eq(true)
       end
     end
   end

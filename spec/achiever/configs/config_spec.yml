@@ -2,6 +2,8 @@
 achievements:
   name:
     type: slotted
-    slots: fewdsfohr
+    slots:
+    - a
+    - b
     badges:
-      - required: slot
+    - required: a

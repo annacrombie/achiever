@@ -2,4 +2,6 @@
 achievements:
   name:
     badges:
-      - required: slot
+      - required:
+        - 1
+        - 2

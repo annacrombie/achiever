@@ -43,7 +43,7 @@ module Achiever
     end
 
     def disk_config
-      @disk_config ||= Config.new
+      @disk_config ||= Config.new(file)
     end
 
     def achievements

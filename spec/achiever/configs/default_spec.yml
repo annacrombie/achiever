@@ -1,0 +1,14 @@
+---
+config:
+  defaults:
+    achievement:
+      visibility: hidden
+    badge:
+      img: lol
+
+achievements:
+  name:
+    slots:
+      - elephant
+    badges:
+      - required: 'elephant'

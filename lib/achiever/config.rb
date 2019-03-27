@@ -2,16 +2,21 @@ module Achiever
   class Config
     include Kaicho
 
+    def initialize(file)
+      @file = Rails.root.join(file)
+      super()
+    end
+
     def old_file?
       @mtime ||= Time.at(0)
       omtime = @mtime
-      @mtime = File.mtime(Rails.root.join(Achiever.file))
+      @mtime = File.mtime(@file)
 
       omtime < @mtime
     end
 
     def_resource(:data) do
-      file = File.open(Rails.root.join(Achiever.file), 'r')
+      file = File.open(@file, 'r')
       data = Util.deep_keys_to_sym(YAML.safe_load(file.read))
       ConfigValidator.valid!(data)
       data
@@ -53,7 +58,13 @@ module Achiever
             )
           )
 
-        slot_values(achievement) if achievement[:type] == 'slotted'
+        if achievement[:type] == 'slotted'
+          unless achievement.key?(:slots)
+            raise(TypeError, "#{name} has a type of 'slotted' but has no slots")
+          end
+
+          slot_values(achievement)
+        end
 
         [name, achievement]
       end.to_h
