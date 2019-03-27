@@ -17,7 +17,12 @@ module Achiever
     end
 
     def name
-      @name ||= I18n.t("achiever.achievements.#{@ach}.badges")[badge_id][:name]
+      tl =
+        catch(:exception) do
+          I18n.t("achiever.achievements.#{@ach}.badges", throw: true)
+        end
+
+      @name ||= tl.is_a?(I18n::MissingTranslation) ? tl.message : val[badge_id][:name]
     end
 
     def desc
