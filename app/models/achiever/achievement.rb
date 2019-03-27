@@ -4,9 +4,13 @@ module Achiever
     validate :valid_achievement_name
 
     def valid_achievement_name
-      unless Achiever.achievements.key?(name.to_sym)
+      unless Achiever.achievements.key?(name)
         errors.add(:name, "no such achievement '#{name}'")
       end
+    end
+
+    def name
+      self[:name].to_sym
     end
 
     def badges
