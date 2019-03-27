@@ -2,6 +2,10 @@
 
 module Achiever
   module Helpers
+    def achievements
+      Achiever::Achievement.where(user_id: id)
+    end
+
     def has_achievement?(name)
       name = name.to_sym
       achievements.exists?(name: name)
