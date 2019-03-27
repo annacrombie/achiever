@@ -17,5 +17,17 @@ module Achiever
         i + 1 if rqd_slots.include?(e)
       end.compact.reduce(0) { |m, v| m + (2 ** v) }
     end
+
+    def slot_to_progress(slots, slot)
+      2 ** (slots.index(slot) + 1)
+    end
+
+    def slotted_progress(old, slots, slot)
+      old | slot_to_progress(slots, slot)
+    end
+
+    def cumulative_progress(old, inc)
+      old + new
+    end
   end
 end

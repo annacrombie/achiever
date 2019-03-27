@@ -33,14 +33,8 @@ module Achiever
       end.reject { |_n, b| b.nil? }.to_h
     end
 
-    def badge_count
-      achievements.reduce(0) do |c, achievement|
-        c + achievement.badges_count
-      end
-    end
-
     def has_new_badges?
-      achievements.any? { |ach| !ach.new_badges.empty? }
+      achievements.any? { |ach| ! ach.new_badges.empty? }
     end
 
     def new_badges
@@ -51,35 +45,29 @@ module Achiever
       achievements.each(&:clear_new_badges)
     end
 
-    def achieve(name, progress = nil, set: nil)
-      name = name.to_sym
-      if has_achievement?(name)
-        achievement(name)
-      else
-        Achievement.new(name: name, user_id: id)
-      end.yield_self do |ach|
-        case ach.cfg[:type]
-        when 'slotted'
-          raise(
-            TypeError,
-            "The achievement #{name} requires a Symbol progress"
-          ) unless progress.is_a?(Symbol)
-
-          raise(
-            Exceptions::InvalidSlot, "#{progress}"
-          ) unless ach.cfg[:slots].include?(progress)
-
-          ach.update(progress: ach.progress | (2 ** (ach.cfg[:slots].index(progress) + 1)))
-        when 'accumulation'
-          progress = progress.nil? ? 1 : progress
-
-          raise(
-            TypeError,
-            "The achievement #{name} requires an Integer progress"
-          ) unless progress.is_a?(Integer)
-
-          ach.update(progress: ach.progress + progress)
+    def achieve(name, progress = nil)
+      ach =
+        if has_achievement?(name)
+          achievement(name)
+        else
+          Achievement.new(name: name, user_id: id)
         end
+
+      case ach.cfg[:type]
+      when 'slotted'
+        Achiever::Util.check_type(progress, Symbol)
+        Achiever::Util.check_slot(progress, ach.cfg[:slots])
+
+        ach.update(
+          progress: Achiever::Logic.slotted_progress(
+            ach.progress, ach.cfg[:slots], progress))
+      when 'accumulation'
+        progress = progress.nil? ? 1 : progress
+        Achiever::Util.check_type(progress, Integer)
+
+        ach.update(
+          progress: Achiever::Logic.cumulative_progress(
+            ach.progress, progress))
       end
     end
   end

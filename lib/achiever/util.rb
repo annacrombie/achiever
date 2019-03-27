@@ -2,6 +2,20 @@ module Achiever
   module Util
     module_function
 
+    def check_type(given, expected, context="")
+      raise(
+        TypeError,
+        "expected #{expected}, got #{given}:#{given.class}"
+      ) unless given.is_a?(expected)
+    end
+
+    def check_slot(given, slots)
+      raise(
+        Exceptions::InvalidSlot,
+        "#{given.inspect}"
+      ) unless slots.include?(given)
+    end
+
     def deep_keys_to_sym(hash)
       hash.map do |k, v|
         [
