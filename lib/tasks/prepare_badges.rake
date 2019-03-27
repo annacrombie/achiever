@@ -10,38 +10,24 @@
 #   gmsmith 0.6.4
 #   spritesmith-cli
 
-require 'optparse'
-
-# The directory the source badges are
-BADGE_DIR = Rails.root.join('badges').to_s
-# Width of the output badges in pixels
-WIDTH     = '70'
-
 # Temporary working directory
 TMPDIR   = '/tmp/achiever-badges'
 # Directory to store minified images
 MINDIR   = File.join(TMPDIR, 'minified')
-
-# The bucket and key to upload the result to
-BUCKET    = 'mythreatadvice-public-bucket'
-KEY       = 'badgesprites.png'
-
 # Filename of generated spritesheet
-TMPSHEET = File.join(TMPDIR, KEY)
-# Output filename for generated badge
-BADGE_OUT = Rails.root.join("public/#{KEY}").to_s
-
+TMPSHEET = File.join(TMPDIR, 'badges.png')
 # Filename of temporary css
 TMPCSS = File.join(TMPDIR, 'badges.css')
-# Output filename for generated css
-CSS_OUT = Rails.root.join('app/assets/stylesheets/badges.css.erb').to_s
 
 namespace :achiever do
   namespace :badges do
     desc 'Minify badges'
     task :minify do
+      badge_dir = Rails.root.join(Achiever.icon_cfg[:source]).to_s
+      width     = Achiever.icon_cfg[:output][:width].to_s
+
       if !File.exist?(TMPDIR) || !File.exist?(MINDIR) ||
-         File.mtime(BADGE_DIR) > File.mtime(MINDIR)
+         File.mtime(badge_dir) > File.mtime(MINDIR)
         sh 'mkdir', '-p', TMPDIR
         sh 'mkdir', '-p', MINDIR
 
@@ -50,7 +36,7 @@ namespace :achiever do
           '-path', MINDIR,
           '-filter', 'Triangle',
           '-define', 'filter:support=2',
-          '-thumbnail', WIDTH,
+          '-thumbnail', width,
           '-unsharp', '0.25x0.25+8+0.065',
           '-dither', 'None',
           '-posterize', '136',
@@ -63,16 +49,33 @@ namespace :achiever do
           '-interlace', 'none',
           '-colorspace', 'sRGB',
           '-strip',
-          *Dir.glob("#{BADGE_DIR}/**/*.png")
+          *Dir.glob("#{badge_dir}/**/*.png")
         )
       end
     end
 
     desc 'Spritify badges'
     task spritify: :minify do
-      if !File.exist?(BADGE_OUT) || !File.exist?(CSS_OUT) ||
-         File.mtime(MINDIR) > File.mtime(BADGE_OUT) ||
-         File.mtime(MINDIR) > File.mtime(CSS_OUT)
+      key = Achiever.icon_cfg[:output][:image]
+      badge_out = Rails.root.join(Achiever.icon_cfg[:output][:dir], key).to_s
+      css_out = Rails.root.join(Achiever.icon_cfg[:output][:css]).to_s
+
+      image_source =
+        if Achiever.use_aws_in_production?
+          bucket = Achiever.icon_cfg[:output][:aws_bucket]
+          raise(
+            ArgumentError,
+            'please set the Achiever.icon_cfg[:output][:aws_bucket] setting'
+          ) unless bucket.is_a?(String)
+
+          "<%= Rails.env == 'development' ? asset_path('#{key}') : 'http://s3.amazonaws.com/#{bucket}/#{key}' %>"
+        else
+          "<%= asset_path('#{key}') %>"
+        end
+
+      if !File.exist?(badge_out) || !File.exist?(css_out) ||
+         File.mtime(MINDIR) > File.mtime(badge_out) ||
+         File.mtime(MINDIR) > File.mtime(css_out)
 
         ssjs = File.join(TMPDIR, 'spritesmith.js')
         File.open(ssjs, 'w') do |f|
@@ -101,25 +104,32 @@ namespace :achiever do
 
         File.read(TMPCSS).gsub(
           /IMGPATH/,
-          "<%= Rails.env == 'development' ? 'http://localhost:3000/#{KEY}' : 'http://s3.amazonaws.com/#{BUCKET}/#{KEY}' %>"
+          image_source
         ).yield_self { |css| File.write(TMPCSS, css) }
 
-        sh 'cp', TMPSHEET, BADGE_OUT
-        sh 'cp', TMPCSS, CSS_OUT
+        sh 'cp', TMPSHEET, badge_out
+        sh 'cp', TMPCSS, css_out
       end
     end
 
     desc 'Upload badges to aws'
     task upload: %i[environment spritify] do
+      key = Achiever.icon_cfg[:output][:image]
+      bucket = Achiever.icon_cfg[:output][:aws_bucket]
+      raise(
+        ArgumentError,
+        'please set the Achiever.icon_cfg[:output][:aws_bucket] setting'
+      ) unless bucket.is_a?(String)
+
       sh(
         'aws', 's3',
-        'cp', TMPSHEET, "s3://#{BUCKET}/#{KEY}"
+        'cp', TMPSHEET, "s3://#{bucket}/#{key}"
       )
 
       sh(
         'aws', 's3api', 'put-object-acl',
-        '--bucket', BUCKET,
-        '--key', KEY,
+        '--bucket', bucket,
+        '--key', key,
         '--acl', 'public-read'
       )
     end

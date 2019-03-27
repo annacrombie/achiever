@@ -21,8 +21,18 @@ module Achiever
         type: 'accumulation',
         visibility: 'visible'
       }
-    })
-
+    },
+    icon_cfg: {
+      source: 'badges',
+      output: {
+        width: 70,
+        css: 'app/assets/stylesheets/badges.css.erb',
+        image: 'badges.png',
+        dir: 'app/assets/images'
+      },
+    },
+    use_aws_in_production: false
+  )
 
   class<<self
     def check_name(achievement)
