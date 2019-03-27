@@ -38,9 +38,7 @@ module Achiever
             .map(&:to_sym)
 
         b[:required] =
-          achievement[:slots].each_with_index.map do |e, i|
-            i + 1 if b[:required_slots].include?(e)
-          end.compact.reduce(0) { |m, v| m + (2 ** v) }
+          Logic.slots_to_required(achievement[:slots], b[:required_slots])
       end
     end
 
