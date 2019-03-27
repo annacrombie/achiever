@@ -4,13 +4,23 @@ module Achiever
   module Exceptions
     class InvalidAchievementName < StandardError
       def initialize(name)
-        super("Invalid achievement name: '#{name}'")
+        dict =
+          DidYouMean::SpellChecker.new(dictionary: Achiever.achievements.keys)
+        candidate = dict.correct(name)
+        dym = candidate.empty? ? '' : ", did you mean #{candidate[0].inspect}?"
+
+        super("Invalid achievement name: #{name.inspect}#{dym}")
       end
     end
 
     class InvalidSlot < StandardError
-      def initialize(slot)
-        super("The slot #{slot} is not valid")
+      def initialize(slot, slots)
+        dict =
+          DidYouMean::SpellChecker.new(dictionary: slots)
+        candidate = dict.correct(slot)
+        dym = candidate.empty? ? '' : ", did you mean #{candidate[0].inspect}?"
+
+        super("The slot #{slot} is not valid#{dym}")
       end
     end
 

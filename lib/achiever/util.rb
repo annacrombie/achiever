@@ -11,8 +11,10 @@ module Achiever
 
     def check_slot(given, slots)
       raise(
-        Exceptions::InvalidSlot,
-        "#{given.inspect}"
+        Exceptions::InvalidSlot.new(
+          "#{given.inspect}",
+          slots
+        )
       ) unless slots.include?(given)
     end
 

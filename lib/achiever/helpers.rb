@@ -16,7 +16,7 @@ module Achiever
 
     def badges
       achievements.reduce({}) do |badges, achievement|
-        badges[achievement.name] = achievement.badges
+        badges.merge(achievement.name => achievement.badges)
       end
     end
 
@@ -50,7 +50,7 @@ module Achiever
         if has_achievement?(name)
           achievement(name)
         else
-          Achievement.new(name: name, user_id: id)
+          Achievement.create(name: name, user_id: id)
         end
 
       case ach.cfg[:type]

@@ -31,8 +31,8 @@ module Achiever
 
     def new_badges
       cfg[:badges].map do |badge|
-        if !Achiever::Logic.attained?(name, badge[:required], progress) &&
-            Achiever::Logic.attained?(name, badge[:required], notified_progress)
+        if Achiever::Logic.attained?(name, badge[:required], progress) &&
+            !Achiever::Logic.attained?(name, badge[:required], notified_progress)
           Achiever::Badge.new(name, badge[:required], progress)
         end
       end.compact
