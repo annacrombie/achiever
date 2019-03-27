@@ -1,9 +1,0 @@
----
-achievements:
-  name:
-    type: slotted
-    slots:
-    - a
-    - b
-    badges:
-    - required: a
