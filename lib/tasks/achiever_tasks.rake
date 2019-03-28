@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 namespace :achiever do
+  desc 'remove achievements with invalid names'
   task cleanup: :environment do
     rel = Achiever::Achievement.where.not(name: Achiever.achievements.keys)
     print("Really delete #{rel.count} achievements? [Y/n] ")
