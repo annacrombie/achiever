@@ -2,6 +2,12 @@
 
 module Achiever
   module Exceptions
+    class UninitializedAchieverSubject < StandardError
+      def initialize
+        super('no achiever subject set, please call set_achiever_subject(subject)')
+      end
+    end
+
     class InvalidAchievementName < StandardError
       def initialize(name)
         dict =
