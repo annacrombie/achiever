@@ -23,6 +23,7 @@ module Achiever
         visibility: 'visible'
       }
     },
+    achievements_path: 'achievements',
     icon_cfg: {
       source: 'badges',
       output: {
