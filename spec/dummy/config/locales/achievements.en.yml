@@ -1,7 +1,5 @@
 en:
   achiever:
-    congratulations: Congratulations, you earned %{name}
-    view_all: View all achievements
     achievements:
       logins:
         title: Log in
