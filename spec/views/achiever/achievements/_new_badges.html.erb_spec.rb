@@ -11,7 +11,7 @@ RSpec.describe 'achiever/_new_badges.html.erb' do
   end
 
   it 'renders' do
-    render 'achiever/new_badges.html.erb', achiever: @user
+    render 'achiever/new_badges.html.erb', subject: @user
     expect(rendered).not_to match('missing_translation')
     expect(rendered).to match(/#{I18n.t('achiever.congratulations', name: 'Richie Rich')}/)
   end

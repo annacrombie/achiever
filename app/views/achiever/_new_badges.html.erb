@@ -6,13 +6,13 @@
   aria-hidden="false">
   <div class="modal-dialog modal-md">
     <div class="modal-content contact-modal-content py-4">
-      <% achiever.new_badges.each do |badge| %>
+      <% subject.new_badges.each do |badge| %>
         <%= render 'achiever/badge', badge: badge %>
         <h1><%= t('achiever.congratulations', name: badge.name) %></h1>
       <% end %>
-      <%= link_to t('achiever.view_all'), Achiever.achievements_path %>
+      <%= link_to t('achiever.view_all'), achiever.achievements_path %>
     </div>
   </div>
 </div>
 
-<% achiever.clear_new_badges %>
+<% subject.clear_new_badges %>
