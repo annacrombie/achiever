@@ -22,12 +22,35 @@ module Achiever
       2 ** (slots.index(slot) + 1)
     end
 
+    def progress_to_slot_indices(have)
+      arr = []
+      while have > 0
+        arr << (have & 0x000000001 == 1 ? true : false)
+        have >>= 1
+      end
+
+      arr.reverse.each_with_index.map { |e, i| i if e }.compact
+    end
+
     def slotted_progress(old, slots, slot)
       old | slot_to_progress(slots, slot)
     end
 
     def cumulative_progress(old, inc)
       old + inc
+    end
+
+    def overall_progress(name, have)
+      cfg = Achiever.achievement(name)
+      max = cfg[:badges].max_by { |e| e[:required] }
+
+      case cfg[:type]
+      when 'slotted'
+        [progress_to_slot_indices(have),
+         progress_to_slot_indices(max[:required])].map(&:count)
+      when 'accumulation'
+        [have, max[:required]]
+      end
     end
   end
 end
