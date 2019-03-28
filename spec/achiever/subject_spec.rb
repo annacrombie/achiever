@@ -1,4 +1,4 @@
-RSpec.describe Achiever::Helpers do
+RSpec.describe Achiever::Subject do
   before(:each) do
     @user = User.create
   end

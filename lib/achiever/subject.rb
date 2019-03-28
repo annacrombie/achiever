@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Achiever
-  module Helpers
+  module Subject
     def achievements
       Achiever::Achievement.where(user_id: id)
     end

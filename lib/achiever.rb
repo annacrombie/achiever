@@ -9,8 +9,8 @@ require 'achiever/config'
 require 'achiever/config_validator'
 require 'achiever/engine'
 require 'achiever/exceptions'
-require 'achiever/helpers'
 require 'achiever/logic'
+require 'achiever/subject'
 require 'achiever/util'
 
 module Achiever
