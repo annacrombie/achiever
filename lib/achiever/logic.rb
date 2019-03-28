@@ -23,13 +23,15 @@ module Achiever
     end
 
     def progress_to_slot_indices(have)
+      return [] unless have.positive?
+
       arr = []
       while have > 0
         arr << (have & 0x000000001 == 1 ? true : false)
         have >>= 1
       end
 
-      arr.reverse.each_with_index.map { |e, i| i if e }.compact
+      arr[1..-1].each_with_index.map { |e, i| i if e }.compact
     end
 
     def slotted_progress(old, slots, slot)
@@ -46,8 +48,7 @@ module Achiever
 
       case cfg[:type]
       when 'slotted'
-        [progress_to_slot_indices(have),
-         progress_to_slot_indices(max[:required])].map(&:count)
+        [progress_to_slot_indices(have), cfg[:slots]].map(&:count)
       when 'accumulation'
         [have, max[:required]]
       end
