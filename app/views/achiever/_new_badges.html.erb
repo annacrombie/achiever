@@ -10,7 +10,7 @@
         <%= render 'achiever/badge', badge: badge %>
         <h1><%= t('achiever.congratulations', name: badge.name) %></h1>
       <% end %>
-      <%= link_to t('achiever.view_all'), achiever.achievements_path %>
+      <%= link_to t('achiever.view_all'), achiever.root_path %>
     </div>
   </div>
 </div>
