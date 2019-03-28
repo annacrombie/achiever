@@ -1,0 +1,11 @@
+<div class="badge_box">
+  <div class="badge_icon">
+    <span
+       class="<%= badge.achieved? ? 'achieved' : 'unachieved' %> <%= badge.img %>"
+       title="<%= badge.desc %>"
+      data-toggle="tooltip"
+      data-placement="top">
+    </span>
+  </div>
+  <span class="badge_title"><%= badge.name %></span>
+</div>

@@ -7,12 +7,12 @@
   <div class="modal-dialog modal-md">
     <div class="modal-content contact-modal-content py-4">
       <% achiever.new_badges.each do |badge| %>
-        <%= badge.icon %>
+        <%= render 'achiever/badge', badge: badge %>
         <h1><%= t('achiever.congratulations', name: badge.name) %></h1>
-        <h4><%= badge.desc %>.</h4>
       <% end %>
       <%= link_to t('achiever.view_all'), achievements_path %>
     </div>
   </div>
 </div>
+
 <% achiever.clear_new_badges %>
