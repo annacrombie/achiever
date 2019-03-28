@@ -55,19 +55,5 @@ module Achiever
         achieved: achieved?
       }
     end
-
-    def icon
-      <<~BADGE
-        <div class="badge_icon">
-          <span
-            class="#{achieved? ? 'achieved' : 'unachieved'} #{img}"
-            title="#{desc}"
-            data-toggle="tooltip"
-            data-placement="top" >
-          </span>
-        </div>
-      BADGE
-        .html_safe
-    end
   end
 end
