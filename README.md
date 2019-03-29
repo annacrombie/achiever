@@ -170,7 +170,7 @@ You need to change it to
 <%= link_to "home", main_app.root_path %>
 ```
 
-(reference)[https://guides.rubyonrails.org/engines.html#routes]
+reference: https://guides.rubyonrails.org/engines.html#routes
 
 ## Usage
 
