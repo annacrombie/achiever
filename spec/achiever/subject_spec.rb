@@ -24,6 +24,11 @@ RSpec.describe Achiever::Subject do
       Achiever::Exceptions::InvalidSlot)
   end
 
+  it 'raises an exception on an invalid type' do
+    expect { @user.achieve(:profile, 1) }.to raise_exception(TypeError)
+    expect { @user.achieve(:logins, :eoih) }.to raise_exception(TypeError)
+  end
+
   context '#achieve' do
     it 'will create achievements for you' do
       expect(@user.achievement(:logins)).to be_nil
