@@ -13,7 +13,7 @@ module Achiever
     end
 
     def slots_to_required(all_slots, rqd_slots)
-      all_slots.each_with_index.map do |e, i|
+      all_slots.map.with_index do |e, i|
         i + 1 if rqd_slots.include?(e)
       end.compact.reduce(0) { |m, v| m + (2 ** v) }
     end
@@ -31,7 +31,7 @@ module Achiever
         have >>= 1
       end
 
-      arr[1..-1].each_with_index.map { |e, i| i if e }.compact
+      arr[1..-1].map.with_index { |e, i| i if e }.compact
     end
 
     def slotted_progress(old, slots, slot)
