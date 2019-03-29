@@ -64,7 +64,7 @@ module Achiever
 
     def badge(name, reqd, have: 0)
       bdg = achievement(name)[:badges].detect { |e| e[:required] == reqd }
-      Badge.new(name, bdg[:required], have)
+      bdg.nil? ? nil : Badge.new(name, bdg[:required], have)
     end
   end
 end
