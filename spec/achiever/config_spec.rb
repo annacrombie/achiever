@@ -1,9 +1,43 @@
 require 'rails_helper'
 
 RSpec.describe Achiever::Config do
+  before(:all) do
+    @tmp_cfg = '../achiever/configs/tmp'
+    FileUtils.mkdir_p(Rails.root.join(@tmp_cfg))
+  end
+
+  context 'error checking' do
+    before(:each) do
+      file = File.join(@tmp_cfg, 'config_spec_0.yml')
+      @file = Rails.root.join(file)
+
+      File.write(
+        @file,
+        YAML.dump(deep_keys_to_s(
+          config: {
+            defaults: {
+              achievement: { type: 'slotted' }
+            }
+          },
+          achievements: {
+            name: {
+              badges: [{ required: 'a' }] } }
+        ))
+      )
+      @config = Achiever::Config.new(file)
+    end
+
+    after(:each) { Achiever.config[:defaults][:achievement][:type] = 'accumulation' }
+
+    it 'will ensure slotted achievements have slots' do
+      expect { @config.achievements }.to raise_exception(TypeError)
+        .with_message('name has a type of \'slotted\' but has no slots')
+    end
+  end
+
   context 'file modification' do
     before(:each) do
-      file = '../achiever/configs/config_spec.yml'
+      file = File.join(@tmp_cfg, 'config_spec_1.yml')
       @file = Rails.root.join(file)
 
       File.write(
