@@ -25,11 +25,10 @@ module Achiever
     def_resource(:cfg, accessors: :none, depends: { data: :keep }) do
       if data.key?(:config) && data[:config].key?(:defaults)
         %i[achievement badge].each do |d|
-          if data[:config][:defaults].key?(d)
-            Achiever.config[:defaults][d].merge!(
-              data[:config][:defaults][d]
-            )
-          end
+          next unless data[:config][:defaults].key?(d)
+          Achiever.config[:defaults][d].merge!(
+            data[:config][:defaults][d]
+          )
         end
       end
     end

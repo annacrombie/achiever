@@ -1,7 +1,7 @@
 module Achiever
   module ConfigValidator
-    TYPES = %w[slotted accumulation]
-    VISIBILITIES = %w[hidden visible]
+    TYPES = %w[slotted accumulation].freeze
+    VISIBILITIES = %w[hidden visible].freeze
 
     class EnumValidator < HashValidator::Validator::Base
       def initialize(name, allowed)
@@ -129,18 +129,18 @@ module Achiever
     end
 
     VALIDATIONS = {
-      config: optional({
-        defaults: optional({
-          achievement: optional({
+      config: optional(
+        defaults: optional(
+          achievement: optional(
             desc: optional('string'),
             type: optional('type'),
             visibility: optional('visibility')
-          }),
-          badge: optional({
+          ),
+          badge: optional(
             img: optional('string')
-          })
-        })
-      }),
+          )
+        )
+      ),
       achievements: 'achievements'
     }
   end

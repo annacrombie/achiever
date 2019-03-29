@@ -2,7 +2,7 @@ module Achiever
   module Util
     module_function
 
-    def check_type(given, expected, context="")
+    def check_type(given, expected, _context = '')
       raise(
         TypeError,
         "expected #{expected}, got #{given}:#{given.class}"
@@ -11,10 +11,7 @@ module Achiever
 
     def check_slot(given, slots)
       raise(
-        Exceptions::InvalidSlot.new(
-          "#{given.inspect}",
-          slots
-        )
+        Exceptions::InvalidSlot.new(given.inspect, slots)
       ) unless slots.include?(given)
     end
 

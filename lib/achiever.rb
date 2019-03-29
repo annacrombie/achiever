@@ -31,7 +31,7 @@ module Achiever
         css: 'app/assets/stylesheets/badges.css.erb',
         image: 'badges.png',
         dir: 'app/assets/images'
-      },
+      }
     },
     use_aws_in_production: false
   )

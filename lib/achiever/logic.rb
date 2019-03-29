@@ -15,19 +15,19 @@ module Achiever
     def slots_to_required(all_slots, rqd_slots)
       all_slots.map.with_index do |e, i|
         i + 1 if rqd_slots.include?(e)
-      end.compact.reduce(0) { |m, v| m + (2 ** v) }
+      end.compact.reduce(0) { |m, v| m + (2**v) }
     end
 
     def slot_to_progress(slots, slot)
-      2 ** (slots.index(slot) + 1)
+      2**(slots.index(slot) + 1)
     end
 
     def progress_to_slot_indices(have)
       return [] unless have.positive?
 
       arr = []
-      while have > 0
-        arr << (have & 0x000000001 == 1 ? true : false)
+      while have.positive?
+        arr << (have & 0x000000001 == 1)
         have >>= 1
       end
 
