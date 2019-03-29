@@ -1,8 +1,22 @@
 # Achiever
 
+
 A rails plugin to add an achievements system to your app.  Features
 include icon management, several achievement types, and default views that make
 it super easy to integrate into an existing project.
+
+## Table of Contents
+
+- [Install](#install)
+- [Setup](#setup)
+  * [Setup Files](#setup-files)
+  * [Setup a Subject](#setup-a-subject)
+  * [Setup Views](#setup-views)
+    + [Achievements Page](#achievements-page)
+    + [New Badges Notification](new-badges-notification)
+    + [Note](#note)
+- [Usage](#usage)
+- [Slotted Achievements](#slotted_achievements)
 
 ## Install
 
@@ -20,7 +34,10 @@ Run `bin/rails db:migrate`
 
 ## Setup
 
-### Setup `config/achiever.yml` and `config/locales/achievements.yml`
+### Setup Files
+
+Two files are required for achiever to function properly.
+`config/achiever.yml` and `config/locales/achievements.yml`
 
 **Note** that the path `config/achiever.yml` can be configured using
 `Achiever.file=`, and `config/locales/achivements.yml` is merely a
@@ -81,7 +98,7 @@ names and possibly descriptions will be incorrect.  If the number of badges in
 the locale file does not equal the number of badges in the config file, there
 will probably be undefined behaviour.
 
-### Setup an `Achiever::Subject`
+### Setup a Subject
 
 A "subject" is something that can achieve, i.e. it `has_many :achievements`.
 You can make any of your models a subject by including `Achiever::Subject`.
