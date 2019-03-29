@@ -10,7 +10,7 @@ module Achiever
     end
 
     def name
-      self[:name].to_sym
+      @name ||= self[:name].to_sym
     end
 
     def badges
