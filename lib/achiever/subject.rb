@@ -6,10 +6,6 @@ module Achiever
       Achievement.where(user_id: id)
     end
 
-    def has_achievement?(name)
-      achievements.exists?(name: name)
-    end
-
     def achievement(name)
       achievements.find_by(name: name)
     end
