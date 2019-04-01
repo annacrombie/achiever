@@ -35,6 +35,8 @@ module Achiever
         new_prog =
           Logic.slotted_progress(progress, cfg[:slots], check_progress(prog))
         update(progress: new_prog)
+
+        self
       end
     end
   end

@@ -34,6 +34,8 @@ module Achiever
           Achiever::Logic.cumulative_progress(
             progress, check_progress(prog))
         update(progress: new_prog)
+
+        self
       end
     end
   end
