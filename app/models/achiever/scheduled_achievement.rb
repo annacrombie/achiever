@@ -8,7 +8,7 @@ module Achiever
     end
 
     def tags
-      @tags ||= self[:tags].split(',').map(&:to_sym)
+      @tags ||= self[:tags].nil? ? [] : self[:tags].split(',').map(&:to_sym)
     end
 
     def tag(t)
