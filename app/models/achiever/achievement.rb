@@ -4,17 +4,10 @@ module Achiever
     include Types::Base
 
     has_many :scheduled_achievements
-    validate :valid_achievement_name
     after_initialize :inherit_type
 
     def inherit_type
       Achiever::Util.instance_include(self, Achiever::Types.mod(cfg[:type]))
-    end
-
-    def valid_achievement_name
-      unless Achiever.achievements.key?(name)
-        errors.add(:name, "no such achievement '#{name}'")
-      end
     end
 
     def name
