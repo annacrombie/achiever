@@ -7,7 +7,8 @@ module Achiever
         end
       end
 
-      %i[overall_progress achieved? check_progress schedule achieve].each do |m|
+      %i[overall_progress achieved? check_progress schedule achieve achieve_raw
+      ].each do |m|
         define_method(m) { |*| Base.not_implemented }
       end
     end

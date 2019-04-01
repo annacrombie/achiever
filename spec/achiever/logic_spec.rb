@@ -15,17 +15,4 @@ RSpec.describe Achiever::Logic do
     expect(Achiever::Logic.progress_to_slot_indices(8)).to eq([2])
     expect(Achiever::Logic.progress_to_slot_indices(0)).to eq([])
   end
-
-  it 'can progress slots' do
-    expect(Achiever::Logic.slotted_progress(0, %i[a b], :a)).to eq(2)
-    expect(Achiever::Logic.slotted_progress(2, %i[a b], :a)).to eq(2)
-    expect(Achiever::Logic.slotted_progress(4, %i[a b], :a)).to eq(6)
-    expect(Achiever::Logic.slotted_progress(6, %i[a b], :a)).to eq(6)
-    expect(Achiever::Logic.slotted_progress(2, %i[a b], :b)).to eq(6)
-    expect(Achiever::Logic.slotted_progress(4, %i[a b], :b)).to eq(4)
-  end
-
-  it 'can progress accumulation' do
-    expect(Achiever::Logic.cumulative_progress(4, 1)).to eq(5)
-  end
 end

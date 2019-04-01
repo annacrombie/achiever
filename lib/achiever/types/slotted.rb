@@ -22,7 +22,7 @@ module Achiever
         Util.check_type(on, Date)
 
         prog =
-          Logic.slot_to_prog(cfg[:slots], check_progress(prog))
+          Logic.slot_to_progress(cfg[:slots], check_progress(prog))
 
         ScheduledAchievement.create(
           achievement_id: id,
@@ -32,11 +32,13 @@ module Achiever
       end
 
       def achieve(prog)
-        new_prog =
-          Logic.slotted_progress(progress, cfg[:slots], check_progress(prog))
-        update(progress: new_prog)
-
+        new_prog = Logic.slot_to_progress(cfg[:slots], check_progress(prog))
+        achieve_raw(new_prog)
         self
+      end
+
+      def achieve_raw(prog)
+        update(progress: self[:progress] | prog)
       end
     end
   end

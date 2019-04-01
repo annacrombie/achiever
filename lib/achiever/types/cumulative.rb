@@ -30,12 +30,13 @@ module Achiever
       end
 
       def achieve(prog = nil)
-        new_prog =
-          Achiever::Logic.cumulative_progress(
-            progress, check_progress(prog))
+        new_prog = check_progress(prog)
         update(progress: new_prog)
-
         self
+      end
+
+      def achieve_raw(prog)
+        update(progress: self[:progress] + prog)
       end
     end
   end

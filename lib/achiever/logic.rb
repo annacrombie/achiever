@@ -1,6 +1,7 @@
 module Achiever
   module Logic
     module_function
+
     def slots_to_required(all_slots, rqd_slots)
       all_slots.map.with_index do |e, i|
         i + 1 if rqd_slots.include?(e)
@@ -21,14 +22,6 @@ module Achiever
       end
 
       arr[1..-1].map.with_index { |e, i| i if e }.compact
-    end
-
-    def slotted_progress(old, slots, slot)
-      old | slot_to_progress(slots, slot)
-    end
-
-    def cumulative_progress(old, inc)
-      old + inc
     end
   end
 end

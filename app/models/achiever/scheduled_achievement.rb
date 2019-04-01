@@ -3,7 +3,7 @@ module Achiever
     belongs_to :achievement
 
     def apply
-      achievement.update(progress: achievement.progress + payload)
+      achievement.achieve_raw(payload)
       destroy
     end
 
