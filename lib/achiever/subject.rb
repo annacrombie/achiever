@@ -40,7 +40,7 @@ module Achiever
       end
     end
 
-    def schedule_achievement(ach, progress, on)
+    def schedule_achievement(name, progress, on)
       achievement!(name).schedule(progress, on)
     end
 
