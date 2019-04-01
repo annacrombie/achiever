@@ -14,4 +14,10 @@ RSpec.describe Achiever::Achievement do
     ach = @user.achievements.first
     expect(ach.badges.length).to eq(4)
   end
+
+  it 'invalidates multiple achievements of the same name for the same user' do
+    @user.achieve(:logins, 0)
+    ach = Achiever::Achievement.new(name: :logins, user_id: @user.id)
+    expect(ach).not_to be_valid
+  end
 end

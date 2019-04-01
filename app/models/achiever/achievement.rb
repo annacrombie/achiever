@@ -5,6 +5,7 @@ module Achiever
 
     has_many :scheduled_achievements
     after_initialize :inherit_type
+    validates :name, uniqueness: { scope: :user_id }
 
     def inherit_type
       Achiever::Util.instance_include(self, Achiever::Types.mod(cfg[:type]))
