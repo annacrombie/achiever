@@ -16,13 +16,14 @@ Gem::Specification.new do |spec|
 
   spec.files = Dir['{app,config,db,lib}/**/*', 'MIT-LICENSE', 'Rakefile', 'README.md']
 
-  spec.add_dependency 'hash_validator'
+  spec.add_dependency 'hash_validator', '~> 0.8'
   spec.add_dependency 'kaicho', '~> 0.3.1'
-  spec.add_dependency 'rails', '~> 5.2.2'
-  spec.add_dependency 'sass'
-  spec.add_dependency 'settei'
+  spec.add_dependency 'rails', '~> 5.2'
+  spec.add_dependency 'sass', '~> 3.7'
+  spec.add_dependency 'settei', '~> 0.1'
 
   spec.add_development_dependency 'rspec-rails', '~> 3.8'
-  spec.add_development_dependency 'simplecov'
-  spec.add_development_dependency 'sqlite3'
+  spec.add_development_dependency 'simplecov', '~> 0.16'
+  spec.add_development_dependency 'sqlite3', '~> 1.3'
+  spec.add_development_dependency 'timecop', '~>0.9'
 end
