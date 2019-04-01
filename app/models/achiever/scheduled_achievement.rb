@@ -14,11 +14,13 @@ module Achiever
     def tag(t)
       tags << t.to_s
       self[:tags] = tags.join(',')
+      self
     end
 
     def tag!(t)
       tag(t)
       save
+      self
     end
   end
 end
