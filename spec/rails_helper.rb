@@ -3,10 +3,10 @@ SimpleCov.start do
   add_filter '/spec/'
   add_filter '/config/'
 
-  add_group 'views', 'app/views'
-  add_group 'models', 'app/models'
   add_group 'controllers', 'app/controllers'
+  add_group 'helpers', 'app/helpers'
   add_group 'lib', 'lib/'
+  add_group 'models', 'app/models'
 end
 
 ENV['RAILS_ENV'] ||= 'test'
