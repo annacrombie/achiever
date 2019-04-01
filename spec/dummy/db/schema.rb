@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_26_165814) do
+ActiveRecord::Schema.define(version: 2019_04_01_173315) do
 
   create_table "achievements", force: :cascade do |t|
     t.string "name", null: false
@@ -30,13 +30,8 @@ ActiveRecord::Schema.define(version: 2019_03_26_165814) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "achiever_scheduled_achievements", force: :cascade do |t|
-    t.integer "achievement_id"
-    t.integer "payload"
-    t.datetime "due"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
+# Could not dump table "achiever_scheduled_achievements" because of following StandardError
+#   Unknown type 'tags' for column 'string'
 
   create_table "users", force: :cascade do |t|
     t.datetime "created_at", null: false
