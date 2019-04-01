@@ -40,11 +40,13 @@ module Achiever
       end
     end
 
-    def achieve_scheduled(ach, progress, on)
+    def schedule_achievement(ach, progress, on)
       achievement!(name).schedule(progress, on)
     end
 
     def achieve(name, progress = nil, on: nil)
+      return schedule_achievement(name, progress, on) unless on.nil?
+
       achievement!(name).achieve(progress)
     end
   end
