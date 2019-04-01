@@ -12,15 +12,6 @@
 
 ActiveRecord::Schema.define(version: 2019_04_01_173315) do
 
-  create_table "achievements", force: :cascade do |t|
-    t.string "name", null: false
-    t.integer "user_id", null: false
-    t.integer "progress", default: 0, null: false
-    t.integer "notified_progress", default: 0, null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "achiever_achievements", force: :cascade do |t|
     t.string "name", null: false
     t.integer "user_id", null: false
@@ -30,8 +21,14 @@ ActiveRecord::Schema.define(version: 2019_04_01_173315) do
     t.datetime "updated_at", null: false
   end
 
-# Could not dump table "achiever_scheduled_achievements" because of following StandardError
-#   Unknown type 'tags' for column 'string'
+  create_table "achiever_scheduled_achievements", force: :cascade do |t|
+    t.integer "achievement_id"
+    t.integer "payload"
+    t.datetime "due"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "tags"
+  end
 
   create_table "users", force: :cascade do |t|
     t.datetime "created_at", null: false
