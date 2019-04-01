@@ -20,7 +20,7 @@ module Achiever
       end
 
       def schedule(prog, on)
-        Achiever::Util.check_type(on, Time)
+        Achiever::Util.check_type(on, Date)
 
         ScheduledAchievement.create(
           achievement_id: id,

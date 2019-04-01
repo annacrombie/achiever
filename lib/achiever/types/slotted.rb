@@ -19,7 +19,8 @@ module Achiever
       end
 
       def schedule(prog, on)
-        Util.check_type(on, Time)
+        Util.check_type(on, Date)
+
         prog =
           Logic.slot_to_prog(cfg[:slots], check_progress(prog))
 
