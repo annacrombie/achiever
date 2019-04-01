@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Achiever::Config do
   before(:all) do
-    @tmp_cfg = '../achiever/configs/tmp'
+    @tmp_cfg = '../configs/tmp'
     FileUtils.mkdir_p(Rails.root.join(@tmp_cfg))
   end
 
@@ -85,7 +85,7 @@ RSpec.describe Achiever::Config do
 
   context 'defaults' do
     it 'propogates defaults' do
-      file = '../achiever/configs/default_spec.yml'
+      file = '../configs/default_spec.yml'
 
       @mutex.synchronize do
         Achiever.defaults[:achievement][:type] = 'slotted'

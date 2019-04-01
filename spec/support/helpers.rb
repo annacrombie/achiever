@@ -1,6 +1,6 @@
 module Helpers
   def cf(base)
-    File.join(__dir__, '../achiever/configs', base)
+    File.join(__dir__, '../configs', base)
   end
 
   def load_yaml(path)

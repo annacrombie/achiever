@@ -10,7 +10,7 @@ spec/dummy/log/*.log
 spec/dummy/node_modules/
 spec/dummy/yarn-error.log
 spec/dummy/tmp/
-spec/achiever/configs/tmp
+spec/configs/tmp
 spec/examples.txt
 
 Gemfile.lock
