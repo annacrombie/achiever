@@ -33,11 +33,9 @@ module Achiever
     end
 
     def achievement!(name)
-      begin
-        Achievement.find_or_create_by(name: name, user_id: id)
-      rescue ActiveRecord::RecordNotUnique
-        retry
-      end
+      Achievement.find_or_create_by(name: name, user_id: id)
+    rescue ActiveRecord::RecordNotUnique
+      retry
     end
 
     def schedule_achievement(name, progress, on)

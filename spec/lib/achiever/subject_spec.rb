@@ -59,5 +59,26 @@ RSpec.describe Achiever::Subject do
 
       expect(@user.badges.length).to eq(2)
     end
+
+    it 'can always get an achievement!' do
+      [
+        Thread.new do
+          10.times.map do
+            Thread.new do
+              10.times do
+                expect { @user.achievement!(:logins) }.not_to raise_exception
+              end
+            end
+          end.map(&:join)
+        end,
+        Thread.new do
+          10.times.map do
+            Thread.new do
+              10.times { @user.achievement!(:logins).delete }
+            end
+          end.map(&:join)
+        end
+      ].map(&:join)
+    end
   end
 end
