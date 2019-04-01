@@ -1,6 +1,5 @@
 module Achiever
   module ConfigValidator
-    TYPES = %w[slotted accumulation].freeze
     VISIBILITIES = %w[hidden visible].freeze
 
     class EnumValidator < HashValidator::Validator::Base
@@ -11,7 +10,7 @@ module Achiever
 
       def validate(key, value, validations, errors)
         unless @allowed.include?(value)
-          errors[key] = "expected one of #{@allowed.map(&:inspect)}, got #{value.inspect}"
+          errors[key] = "expected one of #{@allowed}, got #{value.inspect}"
         end
       end
     end
@@ -105,7 +104,7 @@ module Achiever
     [ AchievementsValidator.new,
       BadgesValidator.new,
       SlotsValidator.new,
-      EnumValidator.new('type', TYPES),
+      EnumValidator.new('type', Types::TYPES),
       EnumValidator.new('visibility', VISIBILITIES),
       BadgeRequirementsValidator.new ].each { |v| HashValidator.append_validator(v) }
 

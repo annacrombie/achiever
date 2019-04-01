@@ -2,8 +2,13 @@ require 'rails_helper'
 
 RSpec.describe 'achiever/achievements/index.html.erb' do
   before(:all) do
-    @achievements = User.new.visible_badges
-    @progress = @achievements.keys.map { |k| [k, [1, 1]] }.to_h
+    @achievements = [
+      {
+        name: :logins,
+        prog: [1, 1],
+        badges: [Achiever::Badge.new(:logins, 5, true)]
+      }
+    ]
   end
 
   it 'renders' do

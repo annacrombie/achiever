@@ -4,6 +4,8 @@ require 'hash_validator'
 require 'kaicho'
 require 'settei'
 
+require 'achiever/types'
+
 require 'achiever/badge'
 require 'achiever/config'
 require 'achiever/config_validator'
@@ -20,7 +22,7 @@ module Achiever
     defaults: {
       badge: { img: '' },
       achievement: {
-        type: 'accumulation',
+        type: 'cumulative',
         visibility: 'visible'
       }
     },
@@ -52,19 +54,6 @@ module Achiever
       name = name.to_sym
       check_name(name)
       achievements[name]
-    end
-
-    # get a list of badges for a given achievement
-    def badges(name, have: 0)
-      achievement(name)[:badges].map do |bdg|
-        Badge.new(name, bdg[:required], have)
-      end
-    end
-
-    # get a specific badges for a given achievement
-    def badge(name, reqd, have: 0)
-      bdg = achievement(name)[:badges].detect { |e| e[:required] == reqd }
-      bdg.nil? ? nil : Badge.new(name, bdg[:required], have)
     end
 
     private

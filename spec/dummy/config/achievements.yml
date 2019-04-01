@@ -1,7 +1,7 @@
 config:
   defaults:
     achievement:
-      type: accumulation
+      type: cumulative
       visibility: visible
     badge:
       img: dummy_1

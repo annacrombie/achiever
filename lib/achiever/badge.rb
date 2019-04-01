@@ -1,13 +1,14 @@
 # frozen_string_literal: true
 
 module Achiever
+  # This class allows easy access
   class Badge
-    attr_reader :achievement, :required, :have
+    attr_reader :achievement, :required
 
-    def initialize(achievement, required, have)
+    def initialize(achievement, required, achieved)
       @achievement = achievement
       @required = required
-      @have = have
+      @achieved = achieved
     end
 
     def badge_id
@@ -47,7 +48,7 @@ module Achiever
     end
 
     def achieved?
-      @achieved ||= Logic.attained?(achievement, required, have)
+      @achieved
     end
 
     def attr
@@ -57,7 +58,6 @@ module Achiever
         img: img,
         visibility: visibility,
         required: required,
-        have: have,
         achievement: achievement,
         achieved: achieved?
       }

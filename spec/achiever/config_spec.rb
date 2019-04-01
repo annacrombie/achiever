@@ -27,7 +27,7 @@ RSpec.describe Achiever::Config do
       @config = Achiever::Config.new(file)
     end
 
-    after(:each) { Achiever.config[:defaults][:achievement][:type] = 'accumulation' }
+    after(:each) { Achiever.config[:defaults][:achievement][:type] = 'cumulative' }
 
     it 'will ensure slotted achievements have slots' do
       expect { @config.achievements }.to raise_exception(TypeError)

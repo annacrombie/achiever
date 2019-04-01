@@ -1,7 +1,15 @@
 # frozen_string_literal: true
 module Achiever
   class Achievement < ApplicationRecord
+    include Types::Base
+
+    has_many :scheduled_achievements
     validate :valid_achievement_name
+    after_initialize :inherit_type
+
+    def inherit_type
+      Achiever::Util.instance_include(self, Achiever::Types.mod(cfg[:type]))
+    end
 
     def valid_achievement_name
       unless Achiever.achievements.key?(name)
@@ -13,27 +21,27 @@ module Achiever
       @name ||= self[:name].to_sym
     end
 
+    def achieved_badges
+      badges.select(&:achieved?)
+    end
+
     def badges
-      Achiever.badges(name, have: progress).select(&:achieved?)
-    end
-
-    def remaining_badges
-      Achiever.badges(name, have: progress).reject(&:achieved?)
-    end
-
-    def all_badges
-      badges + remaining_badges
+      cfg[:badges].map do |bdg|
+        Badge.new(name, bdg[:required], achieved?(bdg[:required]))
+      end
     end
 
     def visible_badges
-      cfg[:visibility] == 'visible' ? all_badges : badges
+      cfg[:visibility] == 'visible' ? badges : achieved_badges
     end
 
     def new_badges
-      cfg[:badges].map do |badge|
-        if Achiever::Logic.attained?(name, badge[:required], progress) &&
-            !Achiever::Logic.attained?(name, badge[:required], notified_progress)
-          Achiever::Badge.new(name, badge[:required], progress)
+      check_scheduled_achievements
+
+      cfg[:badges].map do |bdg|
+        if achieved?(bdg[:required]) &&
+            !achieved?(bdg[:required], notified_progress)
+          Badge.new(name, bdg[:required], true)
         end
       end.compact
     end
@@ -44,6 +52,10 @@ module Achiever
 
     def cfg
       @cfg ||= Achiever.achievement(name)
+    end
+
+    def check_scheduled_achievements
+      scheduled_achievements.where(due: Time.at(0)..Time.now).each(&:apply)
     end
   end
 end

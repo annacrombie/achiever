@@ -2,6 +2,14 @@ module Achiever
   module Util
     module_function
 
+    def instance_include(rcvr, mod)
+      mod.instance_methods(false).each do |m|
+        meth = mod.instance_method(m).bind(rcvr)
+
+        rcvr.define_singleton_method(m, &meth)
+      end
+    end
+
     def check_type(given, expected, _context = '')
       raise(
         TypeError,

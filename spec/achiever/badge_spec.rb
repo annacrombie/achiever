@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Achiever::Badge do
   before(:each) do
-    @badge = Achiever::Badge.new(:logins, 5, 6)
+    @badge = Achiever::Badge.new(:logins, 5, true)
   end
 
   it 'detects the right id' do

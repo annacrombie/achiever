@@ -186,11 +186,11 @@ to run the following every time a user logged in.
 
 ## Slotted Achievements
 
-There are two types of achievements, `accumulative` is the only type discussed
+There are two types of achievements, `cumulative` is the only type discussed
 so far.  The other type is `slotted`.  This lets you reward users for completing
 many different unique actions, like completing their profile.  In order to set
 up a slotted achievement you have to specify its type in the config file
-(achievements are `acuumulative` by default, though this can be overridden).
+(achievements are `cumulative` by default, though this can be overridden).
 
 ```yml
 achievements:

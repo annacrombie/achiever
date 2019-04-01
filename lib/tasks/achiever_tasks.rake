@@ -1,6 +1,16 @@
 # frozen_string_literal: true
 
 namespace :achiever do
+  desc 'test'
+  task benchmark: :environment do
+    require 'benchmark/ips'
+    Benchmark.ips do |b|
+      b.report("normal") {  Achiever::Achievement.new(name: 'logins', user_id: 123) }
+      b.report("abnorm") {  Achiever::ScheduledAchievement.new(achievement_id: 1) }
+      b.compare!
+    end
+  end
+
   desc 'remove achievements with invalid names'
   task cleanup: :environment do
     rel = Achiever::Achievement.where.not(name: Achiever.achievements.keys)

@@ -3,7 +3,7 @@
 module Achiever
   module Subject
     def achievements
-      Achiever::Achievement.where(user_id: id)
+      Achievement.where(user_id: id)
     end
 
     def has_achievement?(name)
@@ -20,19 +20,6 @@ module Achiever
       end
     end
 
-    def visible_badges
-      Achiever.achievements.map do |name, props|
-        [
-          name,
-          if has_achievement?(name)
-            achievement(name).visible_badges
-          elsif props[:visibility] == 'visible'
-            Achiever.badges(name)
-          end
-        ]
-      end.reject { |_n, b| b.nil? }.to_h
-    end
-
     def has_new_badges?
       achievements.any? { |ach| ! ach.new_badges.empty? }
     end
@@ -45,30 +32,20 @@ module Achiever
       achievements.each(&:clear_new_badges)
     end
 
-    def achieve(name, progress = nil)
-      ach =
-        if has_achievement?(name)
-          achievement(name)
-        else
-          Achievement.create(name: name, user_id: id)
-        end
-
-      case ach.cfg[:type]
-      when 'slotted'
-        Achiever::Util.check_type(progress, Symbol)
-        Achiever::Util.check_slot(progress, ach.cfg[:slots])
-
-        ach.update(
-          progress: Achiever::Logic.slotted_progress(
-            ach.progress, ach.cfg[:slots], progress))
-      when 'accumulation'
-        progress = progress.nil? ? 1 : progress
-        Achiever::Util.check_type(progress, Integer)
-
-        ach.update(
-          progress: Achiever::Logic.cumulative_progress(
-            ach.progress, progress))
+    def achievement!(name)
+      begin
+        Achievement.find_or_create_by(name: name, user_id: id)
+      rescue ActiveRecord::RecordNotUnique
+        retry
       end
+    end
+
+    def achieve_scheduled(ach, progress, on)
+      achievement!(name).schedule(progress, on)
+    end
+
+    def achieve(name, progress = nil, on: nil)
+      achievement!(name).achieve(progress)
     end
   end
 end

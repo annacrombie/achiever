@@ -9,11 +9,11 @@ module Achiever
         raise(Achiever::Exceptions::UninitializedAchieverSubject)
       end
 
-      @achievements = @achiever_subject.visible_badges
-      @progress =
-        @achievements.keys.map do |k|
-          [k, Logic.overall_progress(k, @achievements[k].first.have)]
-        end.to_h
+      @achievements =
+        Achiever.achievements.map do |name, _|
+          ach = @achiever_subject.achievement!(name)
+          { name: name, prog: ach.overall_progress, badges: ach.visible_badges }
+        end.reject { |a| a[:badges].empty? }
     end
   end
 end

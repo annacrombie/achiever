@@ -1,13 +1,13 @@
 <div class="content col-sm-12 col-md-9 grey-bg" role="main">
   <h1><%= t('achiever.my_badges') %></h1>
-  <% @achievements.each do |name, badges| %>
+  <% @achievements.each do |ach| %>
     <div class="badge_shelf">
       <span class="achievement_title">
-        <%= t("achiever.achievements.#{name}.title") %>
-        <%= "#{@progress[name][0]} / #{@progress[name][1]}" %>
+        <%= t("achiever.achievements.#{ach[:name]}.title") %>
+        <%= "#{ach[:prog][0]} / #{ach[:prog][1]}" %>
       </span>
       <div class="badge_boxes">
-        <% badges.each do |badge| %>
+        <% ach[:badges].each do |badge| %>
           <%= render 'achiever/badge', badge: badge %>
         <% end %>
       </div>

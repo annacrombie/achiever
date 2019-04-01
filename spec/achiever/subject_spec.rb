@@ -8,12 +8,6 @@ RSpec.describe Achiever::Subject do
     expect(@user.achievement(:logins)).not_to be_nil
   end
 
-  it 'shows visible badges' do
-    expect(@user.visible_badges.length).to eq(12)
-    @user.achieve(:account_owner)
-    expect(@user.visible_badges.length).to eq(13)
-  end
-
   it 'raises an exception on an invalid achievement name' do
     expect { @user.achieve(:acount_owner) }.to raise_exception(
       Achiever::Exceptions::InvalidAchievementName)
