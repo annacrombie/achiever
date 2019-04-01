@@ -21,6 +21,17 @@ RSpec.describe Achiever::Badge do
     expect(@badge.desc).to eq('Login 5 times')
   end
 
+  it 'description override' do
+    badge = Achiever::Badge.new(
+      :leaderboard,
+      Achiever::Logic.slots_to_required(
+        Achiever.achievement(:leaderboard)[:slots], [:first]
+      ),
+      true
+    )
+    expect(badge.desc).to eq('Be the very best')
+  end
+
   it 'has an image' do
     expect(@badge.img).to eq('badge_regular')
   end
@@ -35,5 +46,11 @@ RSpec.describe Achiever::Badge do
 
   it 'has attributes' do
     expect(@badge.attr).to be_a(Hash)
+  end
+
+  it 'validates badge_id' do
+    expect {
+      Achiever::Badge.new(:logins, 1293, true)
+    }.to raise_exception(Achiever::Exceptions::NoSuchBadge)
   end
 end

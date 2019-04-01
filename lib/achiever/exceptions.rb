@@ -2,6 +2,8 @@
 
 module Achiever
   module Exceptions
+    class NoSuchBadge < StandardError; end
+
     class UninitializedAchieverSubject < StandardError
       def initialize
         super('no achiever subject set, please call set_achiever_subject(subject)')

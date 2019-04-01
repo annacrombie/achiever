@@ -9,6 +9,17 @@ module Achiever
       @achievement = achievement
       @required = required
       @achieved = achieved
+
+      validate_required
+    end
+
+    def validate_required
+      if badge_id.nil?
+        raise(
+          Achiever::Exceptions::NoSuchBadge,
+          "achievement: #{achievement}, required: #{required}"
+        )
+      end
     end
 
     def badge_id
