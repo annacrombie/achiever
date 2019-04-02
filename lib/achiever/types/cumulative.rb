@@ -31,7 +31,7 @@ module Achiever
 
       def achieve(prog = nil)
         new_prog = check_progress(prog)
-        update(progress: new_prog)
+        achieve_raw(new_prog)
         self
       end
 
