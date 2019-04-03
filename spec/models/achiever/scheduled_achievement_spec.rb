@@ -27,8 +27,6 @@ RSpec.describe Achiever::ScheduledAchievement do
     expect(@user.scheduled_achievements.tagged(:test, :phishing).length).to eq(10)
     expect(@user.scheduled_achievements.tagged(:phishing).length).to eq(10)
     expect(@user.scheduled_achievements.tagged(:d2).length).to eq(2)
-    p(@user.scheduled_achievements.tagged(:d2))
-    p(@user.scheduled_achievements.tagged(:d2, :test))
     expect(@user.scheduled_achievements.tagged(:d2, :test).length).to eq(2)
   end
 end
