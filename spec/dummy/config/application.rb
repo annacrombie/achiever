@@ -15,6 +15,9 @@ require 'action_cable/engine'
 require 'sprockets/railtie'
 
 Bundler.require(*Rails.groups)
+require 'jquery-rails'
+require 'bootstrap'
+
 require 'achiever'
 
 module Dummy
