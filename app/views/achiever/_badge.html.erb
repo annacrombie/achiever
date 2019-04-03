@@ -1,4 +1,5 @@
 <% tooltip = true if local_assigns[:tooltip].nil? %>
+<% title = true   if local_assigns[:title].nil? %>
 
 <div class="badge_box">
   <div class="badge_icon">
@@ -12,5 +13,8 @@
       >
     </span>
   </div>
-  <span class="badge_title"><%= badge.name %></span>
+
+  <% if title %>
+    <span class="badge_title"><%= badge.name %></span>
+  <% end %>
 </div>
