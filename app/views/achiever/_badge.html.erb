@@ -1,10 +1,15 @@
+<% tooltip = true if local_assigns[:tooltip].nil? %>
+
 <div class="badge_box">
   <div class="badge_icon">
     <span
-       class="<%= badge.achieved? ? 'achieved' : 'unachieved' %> <%= badge.img %>"
-       title="<%= badge.desc %>"
-      data-toggle="tooltip"
-      data-placement="top">
+      class="<%= badge.achieved? ? 'achieved' : 'unachieved' %> <%= badge.img %>"
+      title="<%= badge.desc %>"
+      <% if tooltip %>
+        data-toggle="tooltip"
+        data-placement="top"
+      <% end %>
+      >
     </span>
   </div>
   <span class="badge_title"><%= badge.name %></span>

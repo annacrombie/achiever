@@ -1,16 +1,27 @@
-<div
-  class="modal fade bd-example-modal-md achievements-modal"
-  tabindex="-1"
-  role="dialog"
-  aria-labelledby="myLargeModalLabel"
-  aria-hidden="false">
-  <div class="modal-dialog modal-md">
-    <div class="modal-content contact-modal-content py-4">
-      <% subject.new_badges.each do |badge| %>
-        <%= render 'achiever/badge', badge: badge %>
-        <h1><%= t('achiever.congratulations', name: badge.name) %></h1>
-      <% end %>
-      <%= link_to t('achiever.view_all'), achiever.root_path %>
+<div class="modal fade achievements-modal" role="dialog" >
+  <div class="modal-dialog modal-md modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title"><%= t('achiever.messages.new_badges') %></h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <% subject.new_badges.each do |badge| %>
+          <div class="achiever_new_badge">
+            <%= render 'achiever/badge', badge: badge, tooltip: false %>
+            <h5><%= badge.msg %></h5>
+          </div>
+        <% end %>
+      </div>
+      <div class="achievements_modal_footer modal-footer">
+        <%= link_to(
+          t('achiever.messages.view_all'),
+          achiever.root_path,
+          class: 'achiever_link btn btn-primary'
+        ) %>
+      </div>
     </div>
   </div>
 </div>

@@ -1,6 +1,11 @@
 en:
   achiever:
-    my_badges: My Badges
-    congratulations: Congratulations, you earned %{name}
-    view_all: View all achievements
-  achievements:
+    messages:
+      new_badges: Congrats, you earned some new badges!
+      my_badges: My Badges
+      view_all: View all achievements
+      close: Dismiss
+    defaults:
+      msg: Nice job!
+      progress: "Completed %{completed} out of %{total}"
+    achievements:

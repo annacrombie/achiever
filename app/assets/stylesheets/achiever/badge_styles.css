@@ -30,3 +30,18 @@
 .badge_icon .achieved {
   display: inline-block;
 }
+
+.achiever_new_badge {
+  text-align: center;
+  display: block;
+}
+
+.achiever_link {
+  text-decoration: none;
+}
+
+.achievements_modal {}
+
+.achievements_modal_footer {
+  text-align: center;
+}
