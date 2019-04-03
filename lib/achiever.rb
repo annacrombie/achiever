@@ -13,6 +13,7 @@ require 'achiever/engine'
 require 'achiever/exceptions'
 require 'achiever/logic'
 require 'achiever/subject'
+require 'achiever/translation_helper'
 require 'achiever/util'
 
 # Achiever, add achievements to your app
@@ -54,6 +55,14 @@ module Achiever
       name = name.to_sym
       check_name(name)
       achievements[name]
+    end
+
+    def tl_badge(ach, id, field, **opts)
+      TranslationHelper.badge(ach, id, field, **opts)
+    end
+
+    def tl_achievement(name, field, **opts)
+      TranslationHelper.achievement(name, field, **opts)
     end
 
     private

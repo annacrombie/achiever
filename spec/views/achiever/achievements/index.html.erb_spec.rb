@@ -13,7 +13,7 @@ RSpec.describe 'achiever/achievements/index.html.erb' do
 
   it 'renders' do
     render
-    expect(rendered).to match(/#{I18n.t('achiever.my_badges')}/)
-    expect(rendered).not_to match(/missing.translation/i)
+    expect(rendered).to match(/#{I18n.t('achiever.messages.my_badges')}/)
+    expect(rendered).not_to match(/missing\.translation/i)
   end
 end

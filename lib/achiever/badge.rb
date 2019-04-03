@@ -30,24 +30,18 @@ module Achiever
       @cfg ||= Achiever.achievement(achievement)
     end
 
-    def tl
-      @tl ||=
-        catch(:exception) do
-          I18n.t("achiever.achievements.#{achievement}.badges", throw: true)
-        end
-    end
-
     def name
-      @name ||= tl.is_a?(I18n::MissingTranslation) ? tl.message : tl[badge_id][:name]
+      @name ||= Achiever.tl_badge(achievement, badge_id, :name)
     end
 
     def desc
       @desc ||=
-        unless tl.is_a?(I18n::MissingTranslation) || !tl[badge_id].key?(:desc)
-          tl[badge_id][:desc]
-        else
-          I18n.t("achiever.achievements.#{achievement}.desc", count: required)
-        end
+        Achiever.tl_badge(achievement, badge_id, :desc, count: required)
+    end
+
+    def msg
+      @msg ||=
+        Achiever.tl_badge(achievement, badge_id, :msg, count: required)
     end
 
     def img

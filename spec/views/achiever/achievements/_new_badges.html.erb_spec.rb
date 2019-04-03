@@ -13,6 +13,6 @@ RSpec.describe 'achiever/_new_badges.html.erb' do
   it 'renders' do
     render 'achiever/new_badges.html.erb', subject: @user
     expect(rendered).not_to match('missing_translation')
-    expect(rendered).to match(/#{I18n.t('achiever.congratulations', name: 'Richie Rich')}/)
+    expect(rendered).to match(/#{I18n.t('achiever.messages.new_badges')}/)
   end
 end

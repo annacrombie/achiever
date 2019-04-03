@@ -2,15 +2,17 @@ en:
   achiever:
     achievements:
       logins:
-        title: Log in
         badges:
           - name: Roll Call
+            msg: Welcome to Threatadvice!
           - name: Regular
           - name: First Name Basis
           - name: VIP
-        desc:
-          one: Login once
-          other: "Login %{count} times"
+        title: Log in
+        desc: &desc
+          one: Log in once
+          other: "Log in %{count} times"
+        msg: *desc
 
       profile:
         title: Profile picture
@@ -113,9 +115,11 @@ en:
         title: Phishing tests
         badges:
           - name: Safety First
+            msg: Not too shabby!
           - name: Good Defense
           - name: Not On My Watch
           - name: Catch Me If You Can
-        desc:
+        desc: &desc
           one: "Pass %{count} phishing test"
           other: "Pass %{count} phishing tests"
+        msg: *desc

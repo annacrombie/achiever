@@ -18,7 +18,7 @@ RSpec.describe Achiever::Badge do
   end
 
   it 'has a description' do
-    expect(@badge.desc).to eq('Login 5 times')
+    expect(@badge.desc).to eq('Log in 5 times')
   end
 
   it 'description override' do
