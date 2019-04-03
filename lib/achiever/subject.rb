@@ -10,7 +10,7 @@ module Achiever
       ScheduledAchievement
         .joins(:achievement)
         .where(achiever_achievements: { user_id: id })
-        .then { |r| name.nil? ? r : r.where(achiever_achievements: { name: name }) }
+        .yield_self { |r| name.nil? ? r : r.where(achiever_achievements: { name: name }) }
     end
 
     def achievement(name)
