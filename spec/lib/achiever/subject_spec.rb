@@ -8,6 +8,12 @@ RSpec.describe Achiever::Subject do
     expect(@user.achievement(:logins)).not_to be_nil
   end
 
+  it 'can help you find if a user has a achievement' do
+    expect(@user).not_to have_achievement(:logins)
+    @user.achieve(:logins)
+    expect(@user).to have_achievement(:logins)
+  end
+
   it 'raises an exception on an invalid achievement name' do
     expect { @user.achieve(:acount_owner) }.to raise_exception(
       Achiever::Exceptions::InvalidAchievementName)

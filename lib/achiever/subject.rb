@@ -17,6 +17,10 @@ module Achiever
       achievements.find_by(name: name)
     end
 
+    def has_achievement?(name)
+      achievements.exists?(name: name)
+    end
+
     def badges
       achievements.reduce({}) do |badges, achievement|
         badges.merge(achievement.name => achievement.badges)
