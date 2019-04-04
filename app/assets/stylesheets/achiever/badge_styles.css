@@ -21,13 +21,22 @@
   display: block;
 }
 
-.badge_icon .unachieved {
-  display: inline-block;
+.badge_box .unachieved {
+  /*
+  -webkit-filter: blur(2px);
+  -moz-filter: blur(2px);
+  -o-filter: blur(2px);
+  -ms-filter: blur(2px);
+  filter: blur(2px);
+  */
+}
+
+.unachieved .badge_icon {
   -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
   filter: grayscale(100%);
 }
 
-.badge_icon .achieved {
+.badge_icon span {
   display: inline-block;
 }
 
