@@ -36,7 +36,8 @@ module Achiever
         dir: 'app/assets/images'
       }
     },
-    use_aws_in_production: false
+    use_aws_in_production: false,
+    unachieved_badge_image: 'badge_mystery'
   )
 
   class<<self

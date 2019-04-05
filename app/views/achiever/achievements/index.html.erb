@@ -16,7 +16,12 @@
       </span>
       <div class="badge_boxes">
         <% ach[:badges].each do |badge| %>
-          <%= render 'achiever/badge', badge: badge %>
+          <%= render(
+            'achiever/badge',
+            badge: badge,
+            img: badge.achieved? ? badge.img : Achiever.unachieved_badge_image,
+            with_title: badge.achieved?
+          )%>
         <% end %>
       </div>
     </div>
