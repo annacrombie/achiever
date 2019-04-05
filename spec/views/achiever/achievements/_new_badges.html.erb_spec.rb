@@ -10,8 +10,14 @@ RSpec.describe 'achiever/_new_badges.html.erb' do
     @user.destroy
   end
 
+  it 'raises an exception if you forgot to pass subject' do
+    expect { render 'achiever/new_badges' }.to raise_exception(
+      ActionView::Template::Error
+    )
+  end
+
   it 'renders' do
-    render 'achiever/new_badges.html.erb', subject: @user
+    render 'achiever/new_badges', subject: @user
     expect(rendered).not_to match('missing_translation')
     expect(rendered).to match(/#{I18n.t('achiever.messages.new_badges')}/)
   end
