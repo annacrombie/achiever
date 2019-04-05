@@ -17,18 +17,10 @@
 }
 
 .badge_box .badge_title {
-  border-top: 1px solid black;
   display: block;
 }
 
 .badge_box .unachieved {
-  /*
-  -webkit-filter: blur(2px);
-  -moz-filter: blur(2px);
-  -o-filter: blur(2px);
-  -ms-filter: blur(2px);
-  filter: blur(2px);
-  */
 }
 
 .unachieved .badge_icon {
