@@ -5,8 +5,8 @@ module Achiever
     class NoSuchBadge < StandardError; end
 
     class MissingArgToPartial < StandardError
-      def initialize(arg, partial)
-        super("you forgot to pass #{arg} to the partial")
+      def initialize(arg)
+        super("you forgot to pass '#{arg}' to the partial")
       end
     end
 
