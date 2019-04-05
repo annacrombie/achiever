@@ -1,3 +1,8 @@
+<% if local_assigns[:subject].nil? %>
+  <% raise(Achiever::Exceptions::MissingArgToPartial, :subject) %>
+<% end %>
+<% new_badges = subject.new_badges %>
+
 <div class="modal fade achievements-modal" role="dialog" >
   <div class="modal-dialog modal-md modal-dialog-centered">
     <div class="modal-content">
@@ -8,10 +13,16 @@
         </button>
       </div>
       <div class="modal-body">
-        <% subject.new_badges.each do |badge| %>
+        <% new_badges.each do |badge| %>
           <div class="achiever_new_badge">
-            <%= render 'achiever/badge', badge: badge, tooltip: false %>
+            <h4><%= badge.name %></h4>
+            <%= render 'achiever/badge', badge: badge, with_tooltip: false, with_title: false %>
+            <h6><i><%= badge.desc %></i></h6>
             <h5><%= badge.msg %></h5>
+
+            <% unless badge == new_badges.last %>
+              <div class="sep">---</div>
+            <% end %>
           </div>
         <% end %>
       </div>

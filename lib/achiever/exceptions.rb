@@ -4,6 +4,12 @@ module Achiever
   module Exceptions
     class NoSuchBadge < StandardError; end
 
+    class MissingArgToPartial < StandardError
+      def initialize(arg, partial)
+        super("you forgot to pass #{arg} to the partial")
+      end
+    end
+
     class UninitializedAchieverSubject < StandardError
       def initialize
         super('no achiever subject set, please call set_achiever_subject(subject)')

@@ -1,14 +1,22 @@
-<% tooltip  = true if local_assigns[:tooltip].nil? %>
-<% title    = true if local_assigns[:title].nil? %>
+<% if local_assigns[:badge].nil? %>
+  <% raise(Achiever::Exceptions::MissingArgToPartial, :badge) %>
+<% end %>
+
+<% with_tooltip = true       if local_assigns[:with_tooltip].nil? %>
+<% with_title   = true       if local_assigns[:with_title]  .nil? %>
+<% img          = badge.img  if local_assigns[:img]         .nil? %>
+<% tooltip      = badge.desc if local_assigns[:desc]        .nil? %>
+<% title        = badge.name if local_assigns[:name]        .nil? %>
+
 <% achieved = badge.achieved? ? 'achieved' : 'unachieved' %>
 
 <div class="badge_box">
   <div class="<%= achieved %>">
     <div class="badge_icon">
       <span
-        class=" <%= badge.img %>"
-        title="<%= badge.desc %>"
-        <% if tooltip %>
+        class=" <%= img %>"
+        <% if with_tooltip %>
+          title="<%= tooltip %>"
           data-toggle="tooltip"
           data-placement="top"
         <% end %>
@@ -16,8 +24,8 @@
       </span>
     </div>
 
-    <% if title %>
-      <span class="badge_title"><%= badge.name %></span>
+    <% if with_title %>
+      <span class="badge_title"><%= title %></span>
     <% end %>
   </div>
 </div>
