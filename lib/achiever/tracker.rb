@@ -32,6 +32,7 @@ module Achiever
 
     def before_save(obj)
       subj = get_subj(obj)
+      #subj.class.included_modules.include?(Achiever::Tracker)
       return if subj.id.nil? # this is a brand new record
 
       obj.changes_to_save.each do |k, v|
@@ -43,9 +44,9 @@ module Achiever
             when :new
               v[1]
             when :existence
-              v[1].nil? ? nil : v[1]
+              v[1].nil? ? next : v[1]
             when :truthy
-              v[1] == true ? v[1] : nil
+              v[1] == true ? v[1] : next
             when :both
               v
             else

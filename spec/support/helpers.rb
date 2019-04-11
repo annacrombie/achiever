@@ -27,4 +27,18 @@ module Helpers
       ]
     end.to_h
   end
+
+  def make_tracker
+    k = Class.new
+    k.include(Achiever::Tracker)
+    k
+  end
+
+  def fake_model(changes)
+    obj = Class.new
+    obj.include(Achiever::Subject)
+    obj.define_method(:id) { 1 }
+    obj.define_method(:changes_to_save) { changes.transform_keys(&:to_s) }
+    obj.new
+  end
 end
