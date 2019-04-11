@@ -3,6 +3,13 @@ RSpec.describe Achiever::Subject do
     @user = User.create
   end
 
+  it 'validates its includer' do
+    k = Class.new
+    expect {
+      k.include(Achiever::Subject)
+    }.to raise_exception(Achiever::Exceptions::InvalidSubject)
+  end
+
   it 'can help you find achievements' do
     @user.achieve(:logins)
     expect(@user.achievement(:logins)).not_to be_nil

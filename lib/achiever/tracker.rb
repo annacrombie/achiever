@@ -4,8 +4,8 @@ module Achiever
       def append_features(rcvr)
         super
 
-        unless rcvr.instance_methods.include?(:get_subj)
-          rcvr.define_method(:get_subj) { |obj| obj }
+        unless rcvr.instance_methods.include?(:subject)
+          rcvr.define_method(:subject) { |obj| obj }
         end
 
         class<<rcvr
@@ -31,7 +31,7 @@ module Achiever
     end
 
     def before_save(obj)
-      subj = get_subj(obj)
+      subj = subject(obj)
 
       unless subj.class.included_modules.include?(Achiever::Subject)
         raise(Exceptions::InvalidTrackerSubject, subj)

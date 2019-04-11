@@ -3,19 +3,19 @@ RSpec.describe Achiever::Tracker do
   let(:tracker) { make_tracker }
 
   context 'unit test' do
-    it 'provides a default get_subj method' do
+    it 'provides a default subject getter' do
       ki = tracker.new
-      expect(ki).to respond_to(:get_subj)
-      expect(ki.get_subj(1)).to eq(1)
+      expect(ki).to respond_to(:subject)
+      expect(ki.subject(1)).to eq(1)
     end
 
-    it 'wont overwrite a preexisting get_subj method' do
+    it 'wont overwrite a preexisting subject method' do
       k = Class.new
-      k.define_method(:get_subj) { |obj| false }
+      k.define_method(:subject) { |obj| false }
       k.include(Achiever::Tracker)
       ki = k.new
-      expect(ki).to respond_to(:get_subj)
-      expect(ki.get_subj(1)).to eq(false)
+      expect(ki).to respond_to(:subject)
+      expect(ki.subject(1)).to eq(false)
     end
 
     it 'adds a track class method' do
@@ -98,6 +98,16 @@ RSpec.describe Achiever::Tracker do
         obj = fake_model(a: [1, 2])
         tracker.new.before_save(obj)
         expect(q.pop).to eq([obj, [1, 2]])
+      end
+    end
+
+    context 'validation' do
+      it 'makes sure the subject is valid' do
+        tracker.track(:a) {}
+        tracker.define_method(:subject) { |*| false }
+        expect {
+          tracker.new.before_save(fake_model(a: [1, 2]))
+        }.to raise_exception(Achiever::Exceptions::InvalidTrackerSubject)
       end
     end
   end
