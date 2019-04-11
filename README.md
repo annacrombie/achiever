@@ -16,7 +16,8 @@ it super easy to integrate into an existing project.
     + [New Badges Notification](new-badges-notification)
     + [Note](#note)
 - [Usage](#usage)
-- [Slotted Achievements](#slotted_achievements)
+  * [Slotted Achievements](#slotted_achievements)
+  * [Achiever::Tracker](#achiever_tracker)
 
 ## Install
 
@@ -184,7 +185,7 @@ to run the following every time a user logged in.
 
 `current_user.achieve(:logins, 1)`
 
-## Slotted Achievements
+### Slotted Achievements
 
 There are two types of achievements, `cumulative` is the only type discussed
 so far.  The other type is `slotted`.  This lets you reward users for completing
@@ -221,3 +222,41 @@ To achieve , you just call the `#achieve` method as before, but supply a slot as
 the second argument.
 
 `current_user.achieve(:profile, :picture)`
+
+### Achiever::Tracker
+
+In order to make it easy to track achievements using `ActiveRecord::Observers`,
+the mixin `Achiever::Tracker` is provided.  It can help you write concise observers
+and avoid code duplictaion.  For example, consider this observer:
+
+```ruby
+class UserObserver < ActiveRecord::Observer
+  def before_save(user)
+    changes = user.changes_to_save
+
+    if changes.key?('email_notifications') && changes['email_notifications'][1] == true
+      user.achieve(:enable_notifications)
+    end
+
+    if changes.key?('profile_picture') && !changes['profile_picture'][1].nil?
+      user.achieve(:profile, :picture)
+    end
+  end
+end
+```
+
+It can be rewritten as:
+
+```ruby
+class UserObserver < ActiveRecord::Observer
+  include Achiever::Tracker
+
+  track truthy: :email_notifications do |subj|
+    subj.achieve(:enable_notifications)
+  end
+
+  track existence: :profile_picture do |subj|
+    subj.achieve(:profile, :picture)
+  end
+end
+```
