@@ -54,5 +54,17 @@ module Achiever
         end.join("\n")
       end
     end
+
+    class InvalidTrackerMethod < StandardError
+      def initialize(meth)
+        super("the method #{meth.inspect} is invalid")
+      end
+    end
+
+    class TrackerArityTooLarge < StandardError
+      def initialize(tracker)
+        super("the tracker block for '#{tracker}' takes too many arguments")
+      end
+    end
   end
 end

@@ -13,6 +13,7 @@ require 'achiever/engine'
 require 'achiever/exceptions'
 require 'achiever/logic'
 require 'achiever/subject'
+require 'achiever/tracker'
 require 'achiever/translation_helper'
 require 'achiever/util'
 

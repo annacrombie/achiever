@@ -123,3 +123,11 @@ en:
           one: "Pass %{count} phishing test"
           other: "Pass %{count} phishing tests"
         msg: *desc
+
+      get_older:
+        title: age
+        badges:
+          - name: wizened
+            msg: phew
+        desc: &desc
+          other: "reach the age of %{count}"
