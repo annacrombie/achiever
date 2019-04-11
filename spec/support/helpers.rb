@@ -36,8 +36,9 @@ module Helpers
 
   def fake_model(changes)
     obj = Class.new
-    obj.include(Achiever::Subject)
+    Achiever::Subject.append_features(obj, validate: false)
     obj.define_method(:id) { 1 }
+    obj.define_method(:new_record?) { false }
     obj.define_method(:changes_to_save) { changes.transform_keys(&:to_s) }
     obj.new
   end

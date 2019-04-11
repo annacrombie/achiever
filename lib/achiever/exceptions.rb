@@ -66,5 +66,21 @@ module Achiever
         super("the tracker block for '#{tracker}' takes too many arguments")
       end
     end
+
+    class InvalidSubject < StandardError
+      def initialize
+        super(<<~ERR)
+          The object that implements Achiever::Subject must
+            > be a descendant of ApplicationRecord
+            > have a primary key of type :integer
+        ERR
+      end
+    end
+
+    class InvalidTrackerSubject < StandardError
+      def initialize(obj)
+        super("the object #{obj.inspect} is not a valid subject")
+      end
+    end
   end
 end

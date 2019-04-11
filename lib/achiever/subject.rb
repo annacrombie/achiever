@@ -2,14 +2,30 @@
 
 module Achiever
   module Subject
+    class<<self
+      def validate_subject(obj)
+        unless obj.ancestors.include?(ApplicationRecord) &&
+            obj.attribute_types[obj.primary_key].type == :integer
+          raise(Exceptions::InvalidSubject)
+        end
+      rescue ActiveRecord::StatementInvalid
+      end
+
+      def append_features(rcvr, validate: true)
+        validate_subject(rcvr) if validate
+
+        super(rcvr)
+      end
+    end
+
     def achievements
-      Achievement.where(user_id: id)
+      Achievement.where(subject_id: primary_key_value)
     end
 
     def scheduled_achievements(name = nil)
       ScheduledAchievement
         .joins(:achievement)
-        .where(achiever_achievements: { user_id: id })
+        .where(achiever_achievements: { subject_id: primary_key_value })
         .yield_self { |r| name.nil? ? r : r.where(achiever_achievements: { name: name }) }
     end
 
@@ -40,7 +56,7 @@ module Achiever
     end
 
     def achievement!(name)
-      Achievement.find_or_create_by(name: name, user_id: id)
+      Achievement.find_or_create_by(name: name, subject_id: primary_key_value)
     rescue ActiveRecord::RecordNotUnique
       retry
     end
@@ -53,6 +69,12 @@ module Achiever
       return schedule_achievement(name, progress, on) unless on.nil?
 
       achievement!(name).achieve(progress)
+    end
+
+    private
+
+    def primary_key_value
+      send(self.class.primary_key)
     end
   end
 end

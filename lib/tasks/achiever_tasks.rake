@@ -5,7 +5,7 @@ namespace :achiever do
   task benchmark: :environment do
     require 'benchmark/ips'
     Benchmark.ips do |b|
-      b.report("normal") {  Achiever::Achievement.new(name: 'logins', user_id: 123) }
+      b.report("normal") {  Achiever::Achievement.new(name: 'logins', subject_id: 123) }
       b.report("abnorm") {  Achiever::ScheduledAchievement.new(achievement_id: 1) }
       b.compare!
     end

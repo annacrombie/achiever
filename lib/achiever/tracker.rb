@@ -32,8 +32,12 @@ module Achiever
 
     def before_save(obj)
       subj = get_subj(obj)
-      #subj.class.included_modules.include?(Achiever::Tracker)
-      return if subj.id.nil? # this is a brand new record
+
+      unless subj.class.included_modules.include?(Achiever::Subject)
+        raise(Exceptions::InvalidTrackerSubject, subj)
+      end
+
+      return if subj.new_record?
 
       obj.changes_to_save.each do |k, v|
         next unless self.class.tracking.key?(k)

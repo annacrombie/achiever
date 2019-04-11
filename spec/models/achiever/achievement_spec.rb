@@ -17,7 +17,7 @@ RSpec.describe Achiever::Achievement do
 
   it 'invalidates multiple achievements of the same name for the same user' do
     @user.achieve(:logins, 0)
-    ach = Achiever::Achievement.new(name: :logins, user_id: @user.id)
+    ach = Achiever::Achievement.new(name: :logins, subject_id: @user.id)
     expect(ach).not_to be_valid
   end
 end

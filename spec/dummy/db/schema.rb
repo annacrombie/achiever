@@ -10,16 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_10_022507) do
+ActiveRecord::Schema.define(version: 2019_04_11_201351) do
 
   create_table "achiever_achievements", force: :cascade do |t|
     t.string "name", null: false
-    t.integer "user_id", null: false
+    t.integer "subject_id", null: false
     t.integer "progress", default: 0, null: false
     t.integer "notified_progress", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["user_id", "name"], name: "index_achiever_achievements_on_user_id_and_name", unique: true
+    t.index ["subject_id", "name"], name: "index_achiever_achievements_on_subject_id_and_name", unique: true
   end
 
   create_table "achiever_scheduled_achievements", force: :cascade do |t|
