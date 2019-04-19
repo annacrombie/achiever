@@ -1,6 +1,12 @@
 module Achiever
+  # A module intended to be included in an ActiveRecord::Observer
+  #
+  # it allows for a clean dsl to track attribute changes of a model and apply
+  # achievements based on those changes
   module Tracker
     class<<self
+      # Add the track class method, as well as a subject instance method unless
+      # one exists
       def append_features(rcvr)
         super
 
@@ -9,6 +15,46 @@ module Achiever
         end
 
         class<<rcvr
+          # Track a change.  If the change occurs, the block will be called
+          #
+          # Methods for tracking change are
+          # - +:new+ - fired every time there is a change, the given block is
+          #   passed the new value
+          # - +:existence+ - fired every time the new value is not nil, the
+          #   given block is passed the new value
+          # - +:truthy+ - fired every time the new value is true, the given
+          #   block is passed the new value
+          # - +:both+ - fired every time there is a change, the given block is
+          #   passed the old and new values
+          #
+          # @param change can be a Hash or a Symbol.  If it is a Hash, only the
+          #   first key and value will be considered.  The value will be what
+          #   will be tracked, and the key will be the method used to track.  If
+          #   it is a Symbol the method will default to +:new+
+          #
+          #       track :coins
+          #
+          #   will track the couns attribute of whatever the Observer is
+          #   observing
+          #
+          #       track truthy: :signed_in
+          #
+          #   will track the signed_in attribute, but will only call the
+          #   block if the attribute is changed to a truthy value
+          # @param block the block that will be called when a change is triggered.
+          #   Depending on the block's arity, it will be passed different arguments.
+          #
+          #   A block with arity of 0 will not be passed any arguments
+          #   A block with arity of 1 will be passed *[subject]
+          #   A block with arity of 2 will be passed *[subject, value]
+          #   A block with arity of 3 will be passed *[subject, object, value]
+          #
+          #   Where subject is the result of calling #subject(object)
+          #
+          #   Where value is determined by the tracking method
+          #
+          #   Where object is the original object passed to the #before_save method,
+          #     an instance of what this Tracker is tracking
           def track(change, &block)
             @tracking ||= {}
 
@@ -30,6 +76,11 @@ module Achiever
       end
     end
 
+    # If you include this module into an ActiveRecord::Observer, this function
+    # will be called automatically before whatever it is observing is saved.
+    # This is the entrypoint for Tracker.
+    #
+    # You probably shouldn't call this directly
     def before_save(obj)
       subj = subject(obj)
 
