@@ -47,6 +47,7 @@ module Achiever
   #   is unachieved
   include Settei.cfg(
     file: 'config/achievements.yml',
+    subject_getter: :current_user,
     defaults: {
       badge: { img: '' },
       achievement: {

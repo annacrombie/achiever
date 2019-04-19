@@ -110,6 +110,20 @@ class User < ApplicationRecord
 end
 ```
 
+You must also tell Achiever how it can get the current subject in a controller.
+This can be done by setting `Achiever.subject_getter` to the name of a method
+you can define in your application controller.
+
+```ruby
+Achiever.subject_getter = :current_user
+
+class ApplicationController < ActionController::Base
+  def current_user
+    # get the current user
+  end
+end
+```
+
 ### Setup Views
 
 #### Achievements Page
@@ -119,22 +133,6 @@ If you want the included achievements page, mount the engine like this in
 
 ```ruby
 mount Achiever::Engine, at: '/achievements'
-```
-
-Additionally, you must specify the `achiever_subject` in your
-`ApplicationController` to that the achievements page knows what has
-achievements.  You can use the helper method `achiever_subject=` by including
-`Achiever::AchieverHelper`.
-
-```ruby
-class ApplicationController < ActionController::Base
-  include Achiever::AchieverHelper
-  before_action :set_achiever_subject
-
-  def set_achiever_subject
-    self.achiever_subject = current_user if current_user
-  end
-end
 ```
 
 This will make `/achievements` route to a page that displays all the subject's

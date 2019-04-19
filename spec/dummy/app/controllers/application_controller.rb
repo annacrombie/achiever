@@ -1,13 +1,8 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::Base
-  include Achiever::AchieverHelper
-  before_action :randomize_achievements, :set_achiever_subject
+  before_action :randomize_achievements
   after_action :destroy_user
-
-  def set_achiever_subject
-    self.achiever_subject = current_user
-  end
 
   def randomize_achievements
     Achiever.achievements.keys
