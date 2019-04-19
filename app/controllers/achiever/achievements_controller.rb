@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 require_dependency 'achiever/application_controller'
 
 module Achiever
@@ -10,6 +8,9 @@ module Achiever
           ach = achiever_subject.achievement!(name)
           { name: name, prog: ach.overall_progress, badges: ach.visible_badges }
         end.reject { |a| a[:badges].empty? }
+
+      render 'achiever/achievements'
+    rescue ActionView::MissingTemplate
     end
   end
 end
