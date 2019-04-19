@@ -1,0 +1,22 @@
+<div class="badge_shelf">
+  <span class="achievement_title">
+    <h3>
+      <%= t("achiever.achievements.#{name}.title") %>
+    </h3>
+    <h5>
+      <%= Achiever.tl_achievement(
+        name, :progress, completed: prog[0], total: prog[1]
+      ) %>
+  </h5>
+  </span>
+  <div class="badge_boxes">
+    <% badges.each do |badge| %>
+      <%= render(
+        'achiever/badge',
+        badge: badge,
+        img: badge.achieved? ? badge.img : Achiever.unachieved_badge_image,
+        with_title: badge.achieved?
+      )%>
+    <% end %>
+  </div>
+</div>

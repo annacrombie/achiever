@@ -6,8 +6,8 @@ require 'rails/all'
 
 Bundler.require(*Rails.groups)
 require 'rails-observers'
-#require 'jquery-rails'
-#require 'bootstrap'
+require 'jquery-rails'
+require 'bootstrap'
 
 require 'achiever'
 

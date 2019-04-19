@@ -1,29 +1,6 @@
 <div class="content" role="main">
   <h1><%= t('achiever.messages.my_badges') %></h1>
   <% @achievements.each do |ach| %>
-    <div class="badge_shelf">
-      <span class="achievement_title">
-        <h3>
-          <%= t("achiever.achievements.#{ach[:name]}.title") %>
-        </h3>
-        <h5>
-          <%= Achiever.tl_achievement(
-            ach[:name],
-            :progress,
-            completed: ach[:prog][0], total: ach[:prog][1]
-          ) %>
-      </h5>
-      </span>
-      <div class="badge_boxes">
-        <% ach[:badges].each do |badge| %>
-          <%= render(
-            'achiever/badge',
-            badge: badge,
-            img: badge.achieved? ? badge.img : Achiever.unachieved_badge_image,
-            with_title: badge.achieved?
-          )%>
-        <% end %>
-      </div>
-    </div>
+    <%= render 'achiever/achievement', **ach %>
   <% end %>
 </div>

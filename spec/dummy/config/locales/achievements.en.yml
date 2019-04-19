@@ -130,4 +130,5 @@ en:
           - name: wizened
             msg: phew
         desc: &desc
+          one: "reach the age of %{count}"
           other: "reach the age of %{count}"
