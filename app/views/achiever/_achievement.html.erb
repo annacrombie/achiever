@@ -14,7 +14,7 @@
       <%= render(
         'achiever/badge',
         badge: badge,
-        img: badge.achieved? ? badge.img : Achiever.unachieved_badge_image,
+        img: badge.achieved? ? badge.img : Achiever.config.unachieved_badge_image,
         with_title: badge.achieved?
       )%>
     <% end %>
