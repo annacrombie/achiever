@@ -1,4 +1,5 @@
 .bundle/
+.inch/
 .yardoc/
 coverage/
 doc/
