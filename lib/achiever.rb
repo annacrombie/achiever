@@ -47,27 +47,27 @@ module Achiever
   # - +unachieved_badge_image+ - image to be used instead of badge when badge
   #   is unachieved
   include Hummus.setup(
-    file: 'config/achievements.yml',
-    subject: :current_user,
     defaults: {
-      badge: { img: '' },
       achievement: {
         type: 'cumulative',
         visibility: 'visible'
-      }
+      },
+      badge: { img: '' }
     },
+    file: 'config/achievements.yml',
     icons: {
-      source: 'badges',
       output: {
-        width: 70,
+        aws_bucket: '',
         css: 'app/assets/stylesheets/badges.css.erb',
-        image: 'badges.png',
         dir: 'app/assets/images',
-        aws_bucket: ''
-      }
+        image: 'badges.png',
+        width: 70
+      },
+      source: 'badges'
     },
-    use_aws_in_production: false,
-    unachieved_badge_image: 'badge_mystery'
+    subject: :current_user,
+    unachieved_badge_image: 'badge_mystery',
+    use_aws_in_production: false
   )
 
   class<<self
@@ -104,6 +104,8 @@ module Achiever
     def tl_achievement(name, field, **opts)
       TranslationHelper.achievement(name, field, **opts)
     end
+
+    def register_visibility
 
     private
 
