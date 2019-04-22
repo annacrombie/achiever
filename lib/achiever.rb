@@ -2,7 +2,7 @@
 
 require 'hash_validator'
 require 'kaicho'
-require 'settei'
+require 'hummus'
 
 require 'achiever/types'
 
@@ -45,7 +45,7 @@ module Achiever
   #   an aws bucket in production
   # - +unachieved_badge_image+ - image to be used instead of badge when badge
   #   is unachieved
-  include Settei.cfg(
+  include Hummus.setup(
     file: 'config/achievements.yml',
     subject_getter: :current_user,
     defaults: {
@@ -107,7 +107,7 @@ module Achiever
 
     # Lazy-loads the configuration from the disk
     def disk_config
-      @disk_config ||= Config.new(file)
+      @disk_config ||= Config.new(config.file)
     end
   end
 end

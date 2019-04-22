@@ -22,14 +22,12 @@ module Achiever
       data
     end
 
+    def merge_stash(stash, hash)
+    end
+
     def_resource(:cfg, accessors: :none, depends: { data: :keep }) do
       if data.key?(:config) && data[:config].key?(:defaults)
-        %i[achievement badge].each do |d|
-          next unless data[:config][:defaults].key?(d)
-          Achiever.config[:defaults][d].merge!(
-            data[:config][:defaults][d]
-          )
-        end
+        Achiever.config.defaults.merge!(data[:config][:defaults])
       end
     end
 
@@ -49,10 +47,10 @@ module Achiever
     def_resource(:achievements, depends: { data: instance_method(:old_file?) }) do
       data[:achievements].map do |name, ach|
         achievement =
-          Achiever.defaults[:achievement].merge(
+          Achiever.config.defaults.to_h[:achievement].merge(
             ach.merge(
               badges: ach[:badges].map do |bdg|
-                Achiever.defaults[:badge].merge(bdg)
+                Achiever.config.defaults.to_h[:badge].merge(bdg)
               end
             )
           )

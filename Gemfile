@@ -9,4 +9,5 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 gemspec
 
 gem 'kaicho', git: 'https://github.com/annacrombie/kaicho', branch: 'master'
-gem 'settei', git: 'https://github.com/annacrombie/settei', branch: 'master'
+gem 'hummus', git: 'https://github.com/annacrombie/hummus', branch: 'master'
+gem 'chickpea', git: 'https://github.com/annacrombie/chickpea', branch: 'master'
