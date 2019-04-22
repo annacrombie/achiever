@@ -25,7 +25,7 @@ module Achiever
   # Config can be accessed by calling #config on Acheiver.
   # e.g., in order to access badge defaults
   #
-  #     Achiever.config.defaults.badge #=> { img: '' }
+  #     Achiever.config.defaults.badge.img #=> ''
   #
   # Config keys:
   #
@@ -33,7 +33,7 @@ module Achiever
   # - +defaults+ - default parameters for badges and achievements
   #   - +badge+ - merged with each badge
   #   - +achievement+ - merged with each achievement
-  # - +icon_cfg+ - configuration used by the achiever:badges rake task
+  # - +icons+ - configuration used by the achiever:badges rake task
   #   - +source+ - the source folder for badge images
   #   - +output+ - configuration for badge image processing
   #     - +width+ - the final width of each badge
@@ -41,6 +41,7 @@ module Achiever
   #     - +image+ - the name of the final image generated (also the key if
   #       uploading to aws)
   #     - +dir+ - where to put the generated image
+  #     - +aws_bucket+ - the bucket to upload the spritesheet to
   # - +use_aws_in_production+ - wether or not badge images should be loaded from
   #   an aws bucket in production
   # - +unachieved_badge_image+ - image to be used instead of badge when badge
