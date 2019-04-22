@@ -55,7 +55,7 @@ module Achiever
         visibility: 'visible'
       }
     },
-    icon_cfg: {
+    icons: {
       source: 'badges',
       output: {
         width: 70,

@@ -61,12 +61,8 @@ namespace :achiever do
       css_out = Rails.root.join(Achiever.config.icons.output.css).to_s
 
       image_source =
-        if Achiever.use_aws_in_production?
+        if Achiever.config.use_aws_in_production?
           bucket = Achiever.config.icons.output.aws_bucket
-          raise(
-            ArgumentError,
-            'please set the Achiever.config.icons.output.aws_bucket setting'
-          ) unless bucket.is_a?(String)
 
           "<%= Rails.env == 'development' ? asset_path('#{key}') : 'http://s3.amazonaws.com/#{bucket}/#{key}' %>"
         else
@@ -116,10 +112,6 @@ namespace :achiever do
     task upload: %i[environment spritify] do
       key = Achiever.config.icons.output.image
       bucket = Achiever.config.icons.output.aws_bucket
-      raise(
-        ArgumentError,
-        'please set the Achiever.config.icons.output.aws_bucket setting'
-      ) unless bucket.is_a?(String)
 
       sh(
         'aws', 's3',
