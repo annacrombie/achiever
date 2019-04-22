@@ -61,7 +61,8 @@ module Achiever
         width: 70,
         css: 'app/assets/stylesheets/badges.css.erb',
         image: 'badges.png',
-        dir: 'app/assets/images'
+        dir: 'app/assets/images',
+        aws_bucket: ''
       }
     },
     use_aws_in_production: false,

@@ -23,8 +23,8 @@ namespace :achiever do
   namespace :badges do
     desc 'Minify badges'
     task minify: :environment do
-      badge_dir = Rails.root.join(Achiever.icon_cfg[:source]).to_s
-      width     = Achiever.icon_cfg[:output][:width].to_s
+      badge_dir = Rails.root.join(Achiever.config.icons.source).to_s
+      width     = Achiever.config.icons.output.width.to_s
 
       if !File.exist?(TMPDIR) || !File.exist?(MINDIR) ||
          File.mtime(badge_dir) > File.mtime(MINDIR)
@@ -56,16 +56,16 @@ namespace :achiever do
 
     desc 'Spritify badges'
     task spritify: %i[minify environment] do
-      key = Achiever.icon_cfg[:output][:image]
-      badge_out = Rails.root.join(Achiever.icon_cfg[:output][:dir], key).to_s
-      css_out = Rails.root.join(Achiever.icon_cfg[:output][:css]).to_s
+      key = Achiever.config.icons.output.image
+      badge_out = Rails.root.join(Achiever.config.icons.output.dir, key).to_s
+      css_out = Rails.root.join(Achiever.config.icons.output.css).to_s
 
       image_source =
         if Achiever.use_aws_in_production?
-          bucket = Achiever.icon_cfg[:output][:aws_bucket]
+          bucket = Achiever.config.icons.output.aws_bucket
           raise(
             ArgumentError,
-            'please set the Achiever.icon_cfg[:output][:aws_bucket] setting'
+            'please set the Achiever.config.icons.output.aws_bucket setting'
           ) unless bucket.is_a?(String)
 
           "<%= Rails.env == 'development' ? asset_path('#{key}') : 'http://s3.amazonaws.com/#{bucket}/#{key}' %>"
@@ -114,11 +114,11 @@ namespace :achiever do
 
     desc 'Upload badges to aws'
     task upload: %i[environment spritify] do
-      key = Achiever.icon_cfg[:output][:image]
-      bucket = Achiever.icon_cfg[:output][:aws_bucket]
+      key = Achiever.config.icons.output.image
+      bucket = Achiever.config.icons.output.aws_bucket
       raise(
         ArgumentError,
-        'please set the Achiever.icon_cfg[:output][:aws_bucket] setting'
+        'please set the Achiever.config.icons.output.aws_bucket setting'
       ) unless bucket.is_a?(String)
 
       sh(
