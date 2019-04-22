@@ -111,11 +111,11 @@ end
 ```
 
 You must also tell Achiever how it can get the current subject in a controller.
-This can be done by setting `Achiever.subject_getter` to the name of a method
+This can be done by setting `Achiever.config.subject` to the name of a method
 you can define in your application controller.
 
 ```ruby
-Achiever.subject_getter = :current_user
+Achiever.config.subject = :current_user
 
 class ApplicationController < ActionController::Base
   def current_user

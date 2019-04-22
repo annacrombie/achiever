@@ -47,7 +47,7 @@ module Achiever
   #   is unachieved
   include Hummus.setup(
     file: 'config/achievements.yml',
-    subject_getter: :current_user,
+    subject: :current_user,
     defaults: {
       badge: { img: '' },
       achievement: {
