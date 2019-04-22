@@ -24,7 +24,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'rails', '~> 5.2'
   spec.add_dependency 'rails-observers'
   spec.add_dependency 'sass', '~> 3.7'
-  spec.add_dependency 'hummus', '~> 0.2'
+  spec.add_dependency 'hummus', '~> 0.3'
   spec.add_dependency 'chickpea', '~> 0.2.1'
 
   spec.add_development_dependency 'rspec-rails', '~> 3.8'
