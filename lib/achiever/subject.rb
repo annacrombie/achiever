@@ -15,11 +15,14 @@ module Achiever
 
       def append_features(rcvr, validate: true)
         if validate
-          raise(Exceptions::DuplicateSubject) unless Achiever.subject.nil?
+          if Achiever.subject.nil?
+            Achiever.subject = rcvr
+          elsif Achiever.subject != rcvr
+            raise(Exceptions::DuplicateSubject)
+          end
+
           validate_subject(rcvr)
         end
-
-        Achiever.subject = rcvr
 
         super(rcvr)
       end
