@@ -4,10 +4,15 @@ RSpec.describe Achiever::Subject do
   end
 
   it 'validates its includer' do
+    os = Achiever.subject
+    Achiever.subject = nil
+
     k = Class.new
     expect {
       k.include(Achiever::Subject)
     }.to raise_exception(Achiever::Exceptions::InvalidSubject)
+
+    Achiever.subject = os
   end
 
   it 'can help you find achievements' do

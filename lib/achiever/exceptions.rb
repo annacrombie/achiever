@@ -76,5 +76,17 @@ module Achiever
         super("the object #{obj.inspect} is not a valid subject")
       end
     end
+
+    class InvalidVisibility < StandardError
+      def initialize(vis)
+        super("the visibility #{vis} is not registered")
+      end
+    end
+
+    class DuplicateSubject < StandardError
+      def initialize
+        super('You may only include Achiever::Subject once')
+      end
+    end
   end
 end

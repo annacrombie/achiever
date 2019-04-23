@@ -16,6 +16,7 @@ require 'achiever/subject'
 require 'achiever/tracker'
 require 'achiever/translation_helper'
 require 'achiever/util'
+require 'achiever/visibilities'
 
 # Namespace for Achiever, a Rails engine to add achievements to your app
 module Achiever
@@ -71,6 +72,8 @@ module Achiever
   )
 
   class<<self
+    attr_accessor :subject
+
     # Checks if an achievement is valid, otherwise raises an exception
     #
     # @param [Symbol] achievement the achievement to check
@@ -105,7 +108,9 @@ module Achiever
       TranslationHelper.achievement(name, field, **opts)
     end
 
-    def register_visibility
+    def visibilities
+      Visibilities.instance
+    end
 
     private
 

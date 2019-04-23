@@ -20,4 +20,25 @@ RSpec.describe Achiever::Achievement do
     ach = Achiever::Achievement.new(name: :logins, subject_id: @user.id)
     expect(ach).not_to be_valid
   end
+
+  context 'visibility' do
+    context 'hidden' do
+      let(:ach) { Achiever::Achievement.new(name: :account_owner, subject_id: @user.id) }
+
+      it 'won\'t be displayed' do
+        expect(ach).not_to be_visible
+      end
+    end
+
+    context 'custom' do
+      it 'handles custom behavior' do
+        Achiever.subject = User
+        user = User.create(age: 1)
+        ach = Achiever::Achievement.new(name: :get_older, subject_id: user.id)
+        expect(ach).not_to be_visible
+        user.update(age: 26)
+        expect(ach).to be_visible
+      end
+    end
+  end
 end

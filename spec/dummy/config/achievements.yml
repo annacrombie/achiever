@@ -133,3 +133,4 @@ achievements:
   get_older:
     badges:
       - required: 1
+    visibility: custom

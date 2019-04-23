@@ -11,6 +11,10 @@ module Achiever
       Achiever::Util.instance_include(self, Achiever::Types.mod(cfg[:type]))
     end
 
+    def subject
+      Achiever.subject.find(subject_id)
+    end
+
     def name
       @name ||= self[:name].to_sym
     end
@@ -25,8 +29,12 @@ module Achiever
       end
     end
 
+    def visible?
+      @visible ||= Achiever.visibilities.check(cfg[:visibility], self)
+    end
+
     def visible_badges
-      cfg[:visibility] == 'visible' ? badges : achieved_badges
+      visible? ? badges : achieved_badges
     end
 
     def new_badges

@@ -1,7 +1,5 @@
 module Achiever
   module ConfigValidator
-    VISIBILITIES = %w[hidden visible].freeze
-
     class EnumValidator < HashValidator::Validator::Base
       def initialize(name, allowed)
         @allowed = allowed
@@ -60,7 +58,7 @@ module Achiever
             v,
             {
               required: 'badge_requirements',
-              visibility: optional('visibility'),
+              visibility: optional('string'),
               img: optional('string')
             },
             true
@@ -90,7 +88,7 @@ module Achiever
             {
               badges: 'badges',
               type: optional('type'),
-              visibility: optional('visibility'),
+              visibility: optional('string'),
               slots: optional('slots'),
             },
             true
@@ -105,7 +103,6 @@ module Achiever
       BadgesValidator.new,
       SlotsValidator.new,
       EnumValidator.new('type', Types::TYPES),
-      EnumValidator.new('visibility', VISIBILITIES),
       BadgeRequirementsValidator.new ].each { |v| HashValidator.append_validator(v) }
 
     module_function
@@ -133,7 +130,7 @@ module Achiever
           achievement: optional(
             desc: optional('string'),
             type: optional('type'),
-            visibility: optional('visibility')
+            visibility: optional('string')
           ),
           badge: optional(
             img: optional('string')

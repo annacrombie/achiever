@@ -4,7 +4,6 @@ RSpec.describe Achiever::ConfigValidator do
   [
     ['missing_achievements_key.yml'],
     ['extra_random_key.yml'],
-    ['invalid_visibility.yml'],
     ['invalid_type.yml'],
     ['invalid_badge_slots_1.yml'],
     ['invalid_badge_slots_2.yml'],
