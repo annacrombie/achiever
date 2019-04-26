@@ -66,6 +66,7 @@ module Achiever
       },
       source: 'badges'
     },
+    strict_subject: false,
     subject: :current_user,
     unachieved_badge_image: 'badge_mystery',
     use_aws_in_production: false

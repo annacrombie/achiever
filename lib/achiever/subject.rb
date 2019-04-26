@@ -18,7 +18,11 @@ module Achiever
           if Achiever.subject.nil?
             Achiever.subject = rcvr
           elsif Achiever.subject != rcvr
-            raise(Exceptions::DuplicateSubject)
+            if Achiever.config.strict_subject?
+              raise(Exceptions::DuplicateSubject)
+            else
+              warn("Re-including Achiever::Subject")
+            end
           end
 
           validate_subject(rcvr)
@@ -35,11 +39,10 @@ module Achiever
 
     # Get all scheduled achievements for a user, if name is passed then only
     # find scheduled achievements belonging to that achievement
-    def scheduled_achievements(name = nil)
+    def scheduled_achievements
       ScheduledAchievement
         .joins(:achievement)
         .where(achiever_achievements: { subject_id: primary_key_value })
-        .yield_self { |r| name.nil? ? r : r.where(achiever_achievements: { name: name }) }
     end
 
     # Get an achievement by name
@@ -61,6 +64,8 @@ module Achiever
 
     # Checks if any achievement has new badges
     def has_new_badges?
+      scheduled_achievements.where(due: Time.at(0)..Time.now).each(&:apply)
+
       achievements.any? { |ach| ! ach.new_badges.empty? }
     end
 
@@ -92,8 +97,6 @@ module Achiever
 
       achievement!(name).achieve(progress)
     end
-
-    private
 
     # Get the value of this Subject's primary key
     def primary_key_value
