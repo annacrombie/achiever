@@ -6,13 +6,14 @@ module Achiever
     has_many :scheduled_achievements
     after_initialize :inherit_type
     validates :name, uniqueness: { scope: :subject_id }
+    attr_writer :subject
 
     def inherit_type
       Achiever::Util.instance_include(self, Achiever::Types.mod(cfg[:type]))
     end
 
     def subject
-      Achiever.subject.find(subject_id)
+      @subject ||= Achiever.subject.find(subject_id)
     end
 
     def name
@@ -38,8 +39,6 @@ module Achiever
     end
 
     def new_badges
-      check_scheduled_achievements
-
       cfg[:badges].map do |bdg|
         if achieved?(bdg[:required]) &&
             !achieved?(bdg[:required], notified_progress)
