@@ -18,10 +18,6 @@ RSpec.describe Achiever::ScheduledAchievement do
     expect(@user.scheduled_achievements.count).to eq(20)
   end
 
-  it 'can be filtered by achievement' do
-    expect(@user.scheduled_achievements(:logins).count).to eq(10)
-  end
-
   it 'can be accessed via a tagged scope' do
     expect(@user.scheduled_achievements.tagged('test').length).to eq(20)
     expect(@user.scheduled_achievements.tagged(:test, :phishing).length).to eq(10)
