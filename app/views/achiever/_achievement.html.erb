@@ -7,8 +7,8 @@
       <%= Achiever.tl_achievement(
         achievement[:name],
         :progress,
-        completed: achievement[:prog[0]],
-        total: achievement[:prog[1]]
+        completed: achievement[:prog][0],
+        total: achievement[:prog][1]
       ) %>
   </h5>
   </span>
