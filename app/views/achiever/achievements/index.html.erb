@@ -1,6 +1,4 @@
 <div class="content" role="main">
   <h1><%= t('achiever.messages.my_badges') %></h1>
-  <% @achievements.each do |ach| %>
-    <%= render 'achiever/achievement', **ach %>
-  <% end %>
+  <%= render partial: 'achiever/achievement', collection: @achievements %>
 </div>

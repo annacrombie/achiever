@@ -3,10 +3,22 @@
 <% end %>
 
 <% with_tooltip = true       if local_assigns[:with_tooltip].nil? %>
-<% with_title   = true       if local_assigns[:with_title]  .nil? %>
-<% img          = badge.img  if local_assigns[:img]         .nil? %>
 <% tooltip      = badge.desc if local_assigns[:desc]        .nil? %>
 <% title        = badge.name if local_assigns[:name]        .nil? %>
+
+<% if local_assigns[:with_title].nil? && badge.achieved? %>
+  <% with_title = true %>
+<% else %>
+  <% with_title = false %>
+<% end %>
+
+<% if local_assigns[:img].nil? %>
+  <% if !badge.achieved? %>
+    <% img = Achiever.config.unachieved_badge_image %>
+  <% else %>
+    <% img = badge.img %>
+  <% end %>
+<% end %>
 
 <% achieved = badge.achieved? ? 'achieved' : 'unachieved' %>
 
