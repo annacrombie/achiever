@@ -35,8 +35,10 @@ RSpec.describe Achiever::Achievement do
         Achiever.subject = User
         user = User.create(age: 1)
         ach = Achiever::Achievement.new(name: :get_older, subject_id: user.id)
+        ach.subject = user
+
         expect(ach).not_to be_visible
-        user.update(age: 26)
+        user.age = 26
         expect(ach).to be_visible
       end
     end
