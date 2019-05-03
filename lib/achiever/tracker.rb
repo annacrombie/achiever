@@ -15,14 +15,16 @@ module Achiever
           rcvr.define_method(:subject) { |obj| obj }
         end
 
-        rcvr.define_method(TRACKING_METHOD) { |*args| invoke_trackers(*args) }
-
-        rcvr.define_singleton_method(:tracking_method) do |meth|
-          rcvr.remove_method(TRACKING_METHOD)
-          rcvr.define_method(meth) { |*args| invoke_trackers(*args) }
-        end
-
         class<<rcvr
+          def tracking_methods(*meths)
+            @tracking_methods ||= [:before_save]
+
+            if meths.empty?
+              @tracking_methods
+            else
+              @tracking_methods = meths.uniq.map(&:to_sym)
+            end
+          end
 
           # Track a change.  If the change occurs, the block will be called
           #
@@ -85,12 +87,28 @@ module Achiever
       end
     end
 
+    def before_save(obj)
+      @captured_changes = obj.changes_to_save.dup
+
+      if self.class.tracking_methods.include?(:before_save)
+        invoke_trackers(obj, as: :before_save)
+      end
+    end
+
+    %i[after_create after_save after_commit].each do |meth|
+      define_method(meth) do |obj|
+        if self.class.tracking_methods.include?(meth)
+          invoke_trackers(obj, as: meth)
+        end
+      end
+    end
+
     # If you include this module into an ActiveRecord::Observer, this function
     # will be called automatically before whatever it is observing is saved.
     # This is the entrypoint for Tracker.
     #
     # You probably shouldn't call this directly
-    def invoke_trackers(obj)
+    def invoke_trackers(obj, as: nil)
       subj = subject(obj)
 
       unless subj.class.included_modules.include?(Achiever::Subject)
@@ -99,7 +117,7 @@ module Achiever
 
       return if subj.new_record?
 
-      obj.changes_to_save.each do |k, v|
+      @captured_changes.each do |k, v|
         next unless self.class.tracking.key?(k)
 
         self.class.tracking[k].tap do |t|
@@ -135,5 +153,7 @@ module Achiever
         end
       end
     end
+
+    @captured_changes = {}
   end
 end
