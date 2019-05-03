@@ -1,4 +1,5 @@
 module Achiever
+  TRACKING_METHOD = :before_save
   # A module intended to be included in an ActiveRecord::Observer
   #
   # it allows for a clean dsl to track attribute changes of a model and apply
@@ -14,7 +15,10 @@ module Achiever
           rcvr.define_method(:subject) { |obj| obj }
         end
 
+        rcvr.define_method(TRACKING_METHOD) { |*args| invoke_trackers(*args) }
+
         class<<rcvr
+
           # Track a change.  If the change occurs, the block will be called
           #
           # Methods for tracking change are
@@ -71,6 +75,11 @@ module Achiever
             }
           end
 
+          def tracking(meth)
+            undef_method(TRACKING_METHOD)
+            define_method(meth) { |*args| invoke_trackers(*args) }
+          end
+
           attr_reader :tracking
         end
       end
@@ -81,7 +90,7 @@ module Achiever
     # This is the entrypoint for Tracker.
     #
     # You probably shouldn't call this directly
-    def before_save(obj)
+    def invoke_trackers(obj)
       subj = subject(obj)
 
       unless subj.class.included_modules.include?(Achiever::Subject)
