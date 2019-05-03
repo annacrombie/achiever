@@ -17,6 +17,11 @@ module Achiever
 
         rcvr.define_method(TRACKING_METHOD) { |*args| invoke_trackers(*args) }
 
+        rcvr.define_singleton_method(:tracking_method) do |meth|
+          rcvr.remove_method(TRACKING_METHOD)
+          rcvr.define_method(meth) { |*args| invoke_trackers(*args) }
+        end
+
         class<<rcvr
 
           # Track a change.  If the change occurs, the block will be called
@@ -73,11 +78,6 @@ module Achiever
               method: method,
               block: block
             }
-          end
-
-          def tracking(meth)
-            undef_method(TRACKING_METHOD)
-            define_method(meth) { |*args| invoke_trackers(*args) }
           end
 
           attr_reader :tracking

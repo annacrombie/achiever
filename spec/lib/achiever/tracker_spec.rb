@@ -28,6 +28,14 @@ RSpec.describe Achiever::Tracker do
       expect(tracker.tracking).to have_key('ff')
     end
 
+    it 'adds a tracking_method class method' do
+      expect(tracker).to respond_to(:tracking_method)
+      expect(tracker.new).to respond_to(:before_save)
+      tracker.tracking_method(:after_save)
+      expect(tracker.new).to respond_to(:after_save)
+      expect(tracker.new).not_to respond_to(:before_save)
+    end
+
     it 'ensures you use the right method' do
       tracker.track(wrong: :af) {}
 
