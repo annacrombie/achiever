@@ -15,6 +15,24 @@ RSpec.describe Achiever::Subject do
     Achiever.subject = os
   end
 
+  it 'checks for duplicate includes' do
+    os = Achiever.subject
+    Achiever.subject = Object
+    Achiever.config.strict_subject = true
+
+    expect {
+      User.include(Achiever::Subject)
+    }.to raise_exception(Achiever::Exceptions::DuplicateSubject)
+
+    Achiever.config.strict_subject = false
+
+    expect {
+      User.include(Achiever::Subject)
+    }.not_to raise_exception
+
+    Achiever.subject = os
+  end
+
   it 'can help you find achievements' do
     @user.achieve(:logins)
     expect(@user.achievement(:logins)).not_to be_nil
