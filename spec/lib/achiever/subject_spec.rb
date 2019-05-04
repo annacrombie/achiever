@@ -28,7 +28,7 @@ RSpec.describe Achiever::Subject do
 
     expect {
       User.include(Achiever::Subject)
-    }.not_to raise_exception
+    }.to output.to_stderr
 
     Achiever.subject = os
   end
