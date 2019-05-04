@@ -20,7 +20,7 @@ module Achiever
     def check(name, *args)
       name = name.to_sym
 
-      raise(Exceptions::InvalidVisiblity, name) unless @vis.key?(name)
+      raise(Exceptions::InvalidVisibility, name) unless @vis.key?(name)
 
       @vis[name].call(*args)
     end
