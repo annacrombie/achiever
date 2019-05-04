@@ -64,10 +64,12 @@ module Achiever
 
     # Checks if any achievement has new badges
     def has_new_badges?
-      achievements
-        .includes(:scheduled_achievements)
-        .tap { |as| as.each { |a| a.scheduled_achievements.where(due: Time.at(0)..Time.now).each(&:apply) } }
-        .any? { |ach| ! ach.new_badges.empty? }
+      if scheduled_achievements.where(due: Time.at(0)..Time.now).exists?
+        scheduled_achievements.where(due: Time.at(0)..Time.now)
+          .each(&:apply)
+      end
+
+      achievements.any? { |ach| ach.new_badges? }
     end
 
     # A flat array of all the Subject's new badges

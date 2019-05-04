@@ -47,6 +47,10 @@ module Achiever
       end.compact
     end
 
+    def new_badges?
+      notified_progress != progress
+    end
+
     def clear_new_badges
       update(notified_progress: progress)
     end
