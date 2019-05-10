@@ -48,7 +48,10 @@ module Achiever
     end
 
     def new_badges?
-      notified_progress != progress
+      cfg[:badges].any? do |bdg|
+        achieved?(bdg[:required]) &&
+          !achieved?(bdg[:required], notified_progress)
+      end
     end
 
     def clear_new_badges

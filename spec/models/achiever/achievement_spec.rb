@@ -21,6 +21,28 @@ RSpec.describe Achiever::Achievement do
     expect(ach).not_to be_valid
   end
 
+  context 'new badges?' do
+    let(:achievement) {
+        Achiever::Achievement.new(
+          name: :logins,
+          subject_id: @user.id,
+          progress: 0,
+          notified_progress: 0
+        )
+    }
+
+    it 'knows when it has new badges' do
+      expect(achievement.new_badges?).to be(false)
+      achievement.achieve(1)
+      expect(achievement.new_badges?).to be(true)
+      achievement.clear_new_badges
+      achievement.achieve(3)
+      expect(achievement.new_badges?).to be(false)
+      achievement.achieve(1)
+      expect(achievement.new_badges?).to be(true)
+    end
+  end
+
   context 'visibility' do
     context 'hidden' do
       let(:ach) { Achiever::Achievement.new(name: :account_owner, subject_id: @user.id) }
