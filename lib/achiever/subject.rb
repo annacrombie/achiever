@@ -34,15 +34,16 @@ module Achiever
 
     # Get all a users achievements
     def achievements
-      Achievement.where(subject_id: primary_key_value)
+      @achievements ||= Achievement.where(subject_id: primary_key_value)
     end
 
     # Get all scheduled achievements for a user, if name is passed then only
     # find scheduled achievements belonging to that achievement
     def scheduled_achievements
-      ScheduledAchievement
-        .joins(:achievement)
-        .where(achiever_achievements: { subject_id: primary_key_value })
+      @scheduled_achievements ||=
+        ScheduledAchievement
+          .joins(:achievement)
+          .where(achiever_achievements: { subject_id: primary_key_value })
     end
 
     # Get an achievement by name

@@ -39,22 +39,24 @@ module Achiever
     end
 
     def new_badges
-      cfg[:badges].map do |bdg|
-        if achieved?(bdg[:required]) &&
+      @new_badges ||=
+        cfg[:badges].select do |bdg|
+          achieved?(bdg[:required]) &&
             !achieved?(bdg[:required], notified_progress)
-          Badge.new(name, bdg[:required], true)
-        end
-      end.compact
+        end.map { |bdg| Badge.new(name, bdg[:required], true) }
     end
 
     def new_badges?
-      cfg[:badges].any? do |bdg|
-        achieved?(bdg[:required]) &&
-          !achieved?(bdg[:required], notified_progress)
-      end
+      @has_new_badges ||=
+        cfg[:badges].any? do |bdg|
+          achieved?(bdg[:required]) &&
+            !achieved?(bdg[:required], notified_progress)
+        end.tap { |nb| @new_badges = [] unless nb }
     end
 
     def clear_new_badges
+      return if notified_progress == progress
+
       update(notified_progress: progress)
     end
 
