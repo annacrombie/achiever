@@ -34,11 +34,14 @@ RSpec.describe Achiever::Achievement do
     it 'knows when it has new badges' do
       expect(achievement.new_badges?).to be(false)
       achievement.achieve(1)
+      achievement.flush
       expect(achievement.new_badges?).to be(true)
       achievement.clear_new_badges
       achievement.achieve(3)
+      achievement.flush
       expect(achievement.new_badges?).to be(false)
       achievement.achieve(1)
+      achievement.flush
       expect(achievement.new_badges?).to be(true)
     end
   end
