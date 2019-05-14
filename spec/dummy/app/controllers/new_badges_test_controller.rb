@@ -1,4 +1,6 @@
 class NewBadgesTestController < ApplicationController
+  skip_before_action :randomize_achievements
+
   def index
     @user = User.create
     @user.achieve(:logins, 1)
