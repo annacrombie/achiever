@@ -67,5 +67,11 @@ module Achiever
     def check_scheduled_achievements
       scheduled_achievements.where(due: Time.at(0)..Time.now).each(&:apply)
     end
+
+    def flush
+      %i[cfg new_badges has_new_badges subject name visible]
+        .select { |ivar| instance_variable_defined?(:"@#{ivar}") }
+        .each { |ivar| remove_instance_variable(:"@#{ivar}") }
+    end
   end
 end
