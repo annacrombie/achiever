@@ -111,11 +111,8 @@ module Achiever
     def invoke_trackers(obj, as: nil)
       subj = subject(obj)
 
-      unless subj.class.included_modules.include?(Achiever::Subject)
-        raise(Exceptions::InvalidTrackerSubject, subj)
-      end
-
-      return if subj.new_record?
+      return if !subj.class.included_modules.include?(Achiever::Subject) ||
+        subj.new_record?
 
       @captured_changes.each do |k, v|
         next unless self.class.tracking.key?(k)

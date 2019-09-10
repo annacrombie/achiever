@@ -71,12 +71,6 @@ module Achiever
       end
     end
 
-    class InvalidTrackerSubject < StandardError
-      def initialize(obj)
-        super("the object #{obj.inspect} is not a valid subject")
-      end
-    end
-
     class InvalidVisibility < StandardError
       def initialize(vis)
         super("the visibility #{vis} is not registered")

@@ -100,16 +100,6 @@ RSpec.describe Achiever::Tracker do
         expect(q.pop).to eq([obj, [1, 2]])
       end
     end
-
-    context 'validation' do
-      it 'makes sure the subject is valid' do
-        tracker.track(:a) {}
-        tracker.define_method(:subject) { |*| false }
-        expect {
-          tracker.new.before_save(fake_model(a: [1, 2]))
-        }.to raise_exception(Achiever::Exceptions::InvalidTrackerSubject)
-      end
-    end
   end
 
   it 'actually works' do
